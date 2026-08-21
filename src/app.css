@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: #c8a24a;
+  color: #101418;
+}
+
+@layer components {
+  .kicker {
+    @apply text-xs font-semibold uppercase tracking-[0.2em] text-gold;
+  }
+  .btn-gold {
+    @apply inline-flex items-center justify-center rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-ink transition hover:bg-gold-light;
+  }
+  .btn-outline-light {
+    @apply inline-flex items-center justify-center rounded-full border border-white/30 px-7 py-3.5 text-sm font-semibold text-white transition hover:border-gold hover:text-gold;
+  }
+  .btn-outline-dark {
+    @apply inline-flex items-center justify-center rounded-full border border-ink/20 px-7 py-3.5 text-sm font-semibold text-ink transition hover:border-gold hover:text-gold-dark;
+  }
+}

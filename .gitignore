@@ -1,0 +1,18 @@
+node_modules
+/.svelte-kit
+/build
+/.vercel
+.DS_Store
+.env
+.env.*
+!.env.example
+vite.config.ts.timestamp-*
+.vercel
+
+.vercel
+.env*
+
+# migration helpers (not part of the site)
+_to_delete/
+RUN-ME-download-images.bat
+download_wix_images.ps1
