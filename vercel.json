@@ -1,0 +1,21 @@
+{
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/about-us-jewel-property-serve.html", "destination": "/about", "permanent": true },
+    { "source": "/refurbishment-services.html", "destination": "/refurbishment", "permanent": true },
+    { "source": "/maintenance-services.html", "destination": "/maintenance", "permanent": true },
+    { "source": "/fire-and-flood-damage-restoration-services.html", "destination": "/fire-flood-restoration", "permanent": true },
+    { "source": "/contact-us-jewel-property-serve.html", "destination": "/contact", "permanent": true },
+    { "source": "/case-studies.html", "destination": "/about", "permanent": true }
+  ],
+  "headers": [
+    {
+      "source": "/fonts/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/images/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }]
+    }
+  ]
+}

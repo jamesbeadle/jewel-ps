@@ -1,31 +1,220 @@
+/* ---------------------------------------------------------------------------
+   Brand typography (Jewel Enterprise Brand Guidelines 2026)
+   Display / headings: Switzer  (self-hosted, free licence — Indian Type Foundry)
+   Body: Geom Graphic (licensed). Until the licensed .woff2 files are added,
+   Outfit is used as the geometric stand-in. To switch on Geom Graphic:
+     1. Drop geom-graphic-regular.woff2 / geom-graphic-semibold.woff2 in static/fonts/
+     2. Uncomment the two @font-face blocks marked GEOM below.
+   --------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/fonts/switzer-latin-300-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/switzer-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/switzer-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/switzer-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/switzer-latin-700-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/outfit-latin-wght-normal.woff2') format('woff2');
+}
+/* GEOM — uncomment once the licensed files are in static/fonts/
+@font-face {
+  font-family: 'Geom Graphic';
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/geom-graphic-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Geom Graphic';
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/geom-graphic-semibold.woff2') format('woff2');
+}
+*/
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
+  --gold: #c09a51;
+  --blue: #135eaa;
 }
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-marquee,
+  .animate-pulseRing {
+    animation: none !important;
+  }
+}
+
+body {
+  @apply bg-night font-sans text-white antialiased;
+  overflow-x: hidden;
 }
 
 ::selection {
-  background: #c8a24a;
-  color: #101418;
+  background: #c09a51;
+  color: #080c14;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  @apply font-display font-semibold tracking-tight;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 @layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-site px-5 sm:px-8 lg:px-12;
+  }
   .kicker {
-    @apply text-xs font-semibold uppercase tracking-[0.2em] text-gold;
+    @apply inline-flex items-center gap-3 font-display text-[11px] font-semibold uppercase tracking-kicker text-gold;
+  }
+  .kicker::before {
+    content: '';
+    @apply block h-px w-8 bg-gold;
+  }
+  .h-display {
+    @apply font-display font-semibold leading-[1.02] tracking-[-0.02em];
+    /* scales with width AND height so a short, wide window never pushes the hero copy under the header */
+    font-size: clamp(2.5rem, min(7.5vw, 11vh), 5.5rem);
+  }
+  .h-section {
+    @apply font-display text-[2.1rem] font-semibold leading-[1.06] tracking-[-0.02em] sm:text-5xl lg:text-[3.5rem];
+  }
+  .lede {
+    @apply text-lg leading-relaxed text-grey sm:text-xl;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 font-display text-sm font-semibold tracking-wide transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/70 focus-visible:ring-offset-2 focus-visible:ring-offset-night;
   }
   .btn-gold {
-    @apply inline-flex items-center justify-center rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-ink transition hover:bg-gold-light;
+    @apply btn bg-gold text-night hover:bg-gold-light hover:shadow-[0_10px_40px_-10px_rgba(192,154,81,0.6)];
   }
-  .btn-outline-light {
-    @apply inline-flex items-center justify-center rounded-full border border-white/30 px-7 py-3.5 text-sm font-semibold text-white transition hover:border-gold hover:text-gold;
+  .btn-blue {
+    @apply btn bg-blue text-white hover:bg-blue-light hover:shadow-glow;
   }
-  .btn-outline-dark {
-    @apply inline-flex items-center justify-center rounded-full border border-ink/20 px-7 py-3.5 text-sm font-semibold text-ink transition hover:border-gold hover:text-gold-dark;
+  .btn-ghost {
+    @apply btn border border-white/20 text-white hover:border-gold hover:text-gold;
   }
+  .card {
+    @apply rounded-3xl border border-white/[0.06] bg-night-2/80 backdrop-blur-sm;
+  }
+  .gold-rule {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-gold/60 to-transparent;
+  }
+  /* Photography treatment: guarantees legible text on any photo, dark or bright */
+  .photo {
+    filter: brightness(0.62) contrast(1.05) saturate(0.85);
+  }
+  .photo-tint {
+    background: #0c2d5a;
+    mix-blend-mode: multiply;
+    opacity: 0.55;
+  }
+  .text-gradient-gold {
+    background: linear-gradient(100deg, #d8b970 0%, #c09a51 45%, #9a7a3c 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* Motion primitives (driven by src/lib/motion.js) ------------------------ */
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  will-change: opacity, transform;
+}
+[data-reveal].is-in,
+.no-motion [data-reveal] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+[data-reveal-stagger] > * {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+}
+[data-reveal-stagger].is-in > *,
+.no-motion [data-reveal-stagger] > * {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+[data-reveal-stagger].is-in > *:nth-child(1) { transition-delay: 0ms; }
+[data-reveal-stagger].is-in > *:nth-child(2) { transition-delay: 90ms; }
+[data-reveal-stagger].is-in > *:nth-child(3) { transition-delay: 180ms; }
+[data-reveal-stagger].is-in > *:nth-child(4) { transition-delay: 270ms; }
+[data-reveal-stagger].is-in > *:nth-child(5) { transition-delay: 360ms; }
+[data-reveal-stagger].is-in > *:nth-child(6) { transition-delay: 450ms; }
+[data-reveal-stagger].is-in > *:nth-child(n + 7) { transition-delay: 520ms; }
+
+/* Fine-grain grid texture for dark sections */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+
+/* Native details/summary accordion */
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
 }

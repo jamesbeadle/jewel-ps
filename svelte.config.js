@@ -5,7 +5,10 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 const config = {
   preprocess: vitePreprocess(),
   kit: {
-    adapter: adapter()
+    adapter: adapter(),
+    // Poll for a new deployment so open tabs switch to full-page navigation
+    // (avoids stale-chunk errors right after a deploy or a local rebuild).
+    version: { pollInterval: 30000 }
   }
 };
 

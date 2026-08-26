@@ -1,18 +1,14 @@
 #!/usr/bin/env bash
-# Downloads the images used by the site from the current jewelps.co.uk
-# into static/images/, so the new site can self-host them.
+# Downloads the photography used by the site from the current jewelps.co.uk
+# into static/images/photos/, so the new site can self-host it before the old site is switched off.
 # Run from the project root:  bash scripts/fetch-assets.sh
-# Then change IMG_BASE in src/lib/site.js to '/images'.
+# Then set VITE_IMG_BASE=/images/photos in .env (and in Vercel).
 set -euo pipefail
 
-mkdir -p static/images
-cd static/images
+mkdir -p static/images/photos
+cd static/images/photos
 
 files=(
-  "Logo_Jewel-Property-Serve.png"
-  "Jewel-Property-Serve.webp"
-  "Jewel-diamond.svg"
-  "Jewel-PS-Favicon.png"
   "Safe-Contractor-Approved.png"
   "NIC-EIC-Logo.webp"
   "Vantify-.jpg"
@@ -38,4 +34,4 @@ for f in "${files[@]}"; do
   curl -sfL "https://www.jewelps.co.uk/images/$f" -o "$f" || echo "  FAILED: $f"
 done
 
-echo "Done. Now set IMG_BASE = '/images' in src/lib/site.js"
+echo "Done. Now set VITE_IMG_BASE=/images/photos in .env"

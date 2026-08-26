@@ -16,3 +16,4 @@ vite.config.ts.timestamp-*
 _to_delete/
 RUN-ME-download-images.bat
 download_wix_images.ps1
+static/images/photos/
