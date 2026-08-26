@@ -26,6 +26,33 @@ Old Webflow URLs (`/about-us-jewel-property-serve.html` etc.) 301-redirect to th
 - **Header / footer / mobile menu / sticky call bar** — `src/routes/+layout.svelte`.
 - **Shared sections** — `src/lib/components/` (PageHero, Testimonials, CtaBand, Faq, Accreditations, Seo, Icon, Facets).
 - **Logos** — `static/images/logos/` (from the official logo pack).
+- **Admin area** — `src/routes/admin/` (see below); auth in `src/lib/server/auth.js`, Supabase client in `src/lib/server/db.js`.
+
+## Admin area & enquiries inbox
+
+There's a lightweight admin at **`/admin`** (discreet link in the footer, `noindex`, blocked in `robots.txt`) — the same
+approach as the jewelbb.co.uk site:
+
+- **Enquiries** — every contact-form submission is stored in Supabase and shown as an inbox: unread badge, open to read
+  (marks it read), reply-by-email, archive/restore, delete, pagination. The n8n webhook still fires for email
+  notifications, so you get both.
+- **Login** — one shared username/password from env vars, held in a signed `httpOnly` cookie for 8 hours. No accounts
+  table, no third-party auth.
+- **Supabase** — talked to over plain `fetch` with the service-role key (no SDK). Tables have RLS enabled with no
+  policies, so nothing is reachable with the public anon key.
+
+If Supabase isn't configured the public site is unaffected: the form still delivers via the webhook and the dashboard
+explains what's missing.
+
+**Setup (once):**
+
+1. Create a Supabase project for Jewel PS. In **SQL Editor**, paste `supabase/schema.sql` and Run (creates the
+   `enquiries` table and locks it down).
+2. **Project Settings → API**: copy the **Project URL** and **service_role** key into `SUPABASE_URL` /
+   `SUPABASE_SERVICE_ROLE_KEY` (locally in `.env`, and on Vercel). The service-role key bypasses RLS — server only,
+   never commit it.
+3. Set `ADMIN_USERNAME` / `ADMIN_PASSWORD` (and ideally a random `ADMIN_SESSION_SECRET`) for the login.
+4. Redeploy, then sign in at `/admin`.
 
 ## Launch checklist
 

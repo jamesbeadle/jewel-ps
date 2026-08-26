@@ -10,8 +10,10 @@
 	let scrollY = $state(0);
 	let innerHeight = $state(800);
 	const scrolled = $derived(scrollY > 24);
+	// The admin area (/admin) brings its own chrome — no site header, footer or call bar.
+	const isAdmin = $derived($page.url.pathname.startsWith('/admin'));
 	// The mobile call bar only appears once the hero (and its own CTA) has scrolled away.
-	const showCallBar = $derived(scrollY > innerHeight * 0.9 && $page.url.pathname !== '/contact');
+	const showCallBar = $derived(!isAdmin && scrollY > innerHeight * 0.9 && $page.url.pathname !== '/contact');
 
 	$effect(() => {
 		$page.url.pathname;
@@ -54,9 +56,14 @@
 <svelte:window bind:scrollY bind:innerHeight />
 
 <svelte:head>
-	{@html `<script type="application/ld+json">${jsonLd}</script>`}
+	{#if !isAdmin}
+		{@html `<script type="application/ld+json">${jsonLd}</script>`}
+	{/if}
 </svelte:head>
 
+{#if isAdmin}
+	{@render children()}
+{:else}
 <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-gold focus:px-5 focus:py-3 focus:text-night">
 	Skip to content
 </a>
@@ -188,6 +195,7 @@
 			<div class="flex gap-5">
 				<a href="/documents/terms-and-conditions.pdf" target="_blank" rel="noopener" class="transition hover:text-gold">Terms &amp; conditions (PDF)</a>
 				<a href="/privacy" class="transition hover:text-gold">Privacy</a>
+				<a href="/admin" class="text-grey/40 transition hover:text-gold" rel="nofollow">Admin</a>
 			</div>
 		</div>
 	</div>
@@ -205,3 +213,4 @@
 		<a href={contact.phoneHref} class="btn-gold !px-5 !py-2.5" tabindex={showCallBar ? 0 : -1}>Call {contact.phone}</a>
 	</div>
 </div>
+{/if}
