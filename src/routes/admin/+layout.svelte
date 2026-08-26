@@ -1,7 +1,6 @@
 <script>
 	import './admin.css';
 	import { page } from '$app/stores';
-	import { site } from '$lib/site.js';
 
 	let { data, children } = $props();
 
@@ -29,8 +28,8 @@
 		<nav class="admin__nav" aria-label="Admin">
 			<div class="container admin__nav-inner">
 				<a href="/admin" class="admin__brand" aria-label="Admin dashboard">
-					<img src={site.logo} alt="" class="admin__logo" width="290" height="94" />
-					<span class="admin__brand-text">Admin</span>
+					<span class="admin__brand-mark" aria-hidden="true"></span>
+					<span class="admin__brand-text">Jewel <em>Admin</em></span>
 				</a>
 				<ul class="admin__links">
 					{#each links as link (link.href)}
@@ -86,18 +85,26 @@
 		margin-right: auto;
 	}
 
-	.admin__logo {
-		height: 1.8rem;
-		width: auto;
+	.admin__brand-mark {
+		width: 11px;
+		height: 11px;
+		background: var(--gold-500);
+		transform: rotate(45deg);
+		border-radius: 2px;
+		box-shadow: 0 0 0 3px rgba(192, 154, 81, 0.25);
 	}
 
 	.admin__brand-text {
 		font-family: var(--font-display);
 		font-weight: 600;
-		font-size: 0.9rem;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
+		font-size: 1.02rem;
+		color: #fff;
+	}
+
+	.admin__brand-text em {
+		font-style: normal;
 		color: var(--gold-300);
+		font-weight: 400;
 	}
 
 	.admin__links {

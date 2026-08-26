@@ -10,12 +10,13 @@
 	let scrollY = $state(0);
 	let innerHeight = $state(800);
 	const scrolled = $derived(scrollY > 24);
-	// The admin area (/admin) brings its own chrome — no site header, footer or call bar.
 	// The brochure print route is captured by the PDF generator and must be a
 	// bare document — nothing but the A4 pages.
-	const isAdmin = $derived(
-		$page.url.pathname.startsWith('/admin') || $page.url.pathname.startsWith('/brochure/print')
-	);
+	const isBare = $derived($page.url.pathname.startsWith('/brochure/print'));
+	// The admin area keeps the site header and footer around it (same as
+	// jewelbb.co.uk) but renders the header solid and in normal flow so the
+	// admin bar nests underneath it, and skips the mobile call bar.
+	const isAdmin = $derived($page.url.pathname.startsWith('/admin'));
 	// The mobile call bar only appears once the hero (and its own CTA) has scrolled away.
 	const showCallBar = $derived(!isAdmin && scrollY > innerHeight * 0.9 && $page.url.pathname !== '/contact');
 
@@ -65,7 +66,7 @@
 	{/if}
 </svelte:head>
 
-{#if isAdmin}
+{#if isBare}
 	{@render children()}
 {:else}
 <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-gold focus:px-5 focus:py-3 focus:text-night">
@@ -73,8 +74,8 @@
 </a>
 
 <!-- Header (no backdrop-filter here: it would become the containing block for the fixed menu) -->
-<header class="fixed inset-x-0 top-0 z-50 transition-colors duration-500 {scrolled && !menuOpen ? 'bg-night/95 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]' : 'bg-transparent'}">
-	<div class="container-site flex items-center justify-between transition-[padding] duration-500 {scrolled ? 'py-3.5' : 'py-5 lg:py-7'}">
+<header class="{isAdmin ? 'relative z-50 bg-night' : `fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${scrolled && !menuOpen ? 'bg-night/95 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]' : 'bg-transparent'}`}">
+	<div class="container-site flex items-center justify-between transition-[padding] duration-500 {scrolled || isAdmin ? 'py-3.5' : 'py-5 lg:py-7'}">
 		<a href="/" class="relative z-[70] flex items-center" aria-label="Jewel Property Serve — home">
 			<img src={site.logo} alt="Jewel Property Serve" class="h-9 w-auto sm:h-10 lg:h-12" width="290" height="94" />
 		</a>
