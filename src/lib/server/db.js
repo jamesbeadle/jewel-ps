@@ -122,6 +122,21 @@ export async function dbUpdate(table, id, patch) {
 }
 
 /**
+ * Update every row matching a PostgREST filter query (e.g. `status=eq.active`).
+ * @param {string} table
+ * @param {string} query
+ * @param {Record<string, unknown>} patch
+ */
+export async function dbUpdateWhere(table, query, patch) {
+	const res = await fetch(restUrl(`${table}?${query}`), {
+		method: 'PATCH',
+		headers: headers({ 'Content-Type': 'application/json' }),
+		body: JSON.stringify(patch)
+	});
+	await check(res, `update ${table}`);
+}
+
+/**
  * @param {string} table
  * @param {string} id
  */
@@ -131,4 +146,70 @@ export async function dbDelete(table, id) {
 		headers: headers()
 	});
 	await check(res, `delete ${table}`);
+}
+
+/* ---- Supabase Storage (public 'media' bucket) ------------------------- */
+
+/**
+ * Create a short-lived signed upload URL for the public 'media' bucket so the
+ * browser can upload straight to Supabase Storage. This sidesteps Vercel's
+ * ~4.5 MB request-body cap, so full-resolution photos survive intact.
+ * Returns the absolute PUT URL and the public URL the file will have.
+ * @param {string} filename
+ * @param {string} folder
+ * @returns {Promise<{ uploadUrl: string, publicUrl: string, path: string }>}
+ */
+export async function storageSignedUpload(filename, folder) {
+	const ext = (filename.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '');
+	const path = `${folder}/${crypto.randomUUID()}.${ext}`;
+	const res = await fetch(`${baseUrl()}/storage/v1/object/upload/sign/media/${path}`, {
+		method: 'POST',
+		headers: headers({ 'Content-Type': 'application/json' }),
+		body: JSON.stringify({})
+	});
+	await check(res, 'storage sign upload');
+	const json = /** @type {{ url: string }} */ (await res.json());
+	return {
+		uploadUrl: `${baseUrl()}/storage/v1${json.url}`,
+		publicUrl: `${baseUrl()}/storage/v1/object/public/media/${path}`,
+		path
+	};
+}
+
+/**
+ * List uploaded files in a folder of the 'media' bucket (newest first).
+ * @param {string} folder
+ * @param {number} [limit]
+ * @returns {Promise<{ name: string, publicUrl: string }[]>}
+ */
+export async function storageList(folder, limit = 200) {
+	const res = await fetch(`${baseUrl()}/storage/v1/object/list/media`, {
+		method: 'POST',
+		headers: headers({ 'Content-Type': 'application/json' }),
+		body: JSON.stringify({
+			prefix: folder,
+			limit,
+			sortBy: { column: 'created_at', order: 'desc' }
+		})
+	});
+	await check(res, 'storage list');
+	const rows = /** @type {{ name: string, id: string | null }[]} */ (await res.json());
+	return rows
+		.filter((r) => r.id !== null) // folders come back with a null id
+		.map((r) => ({
+			name: r.name,
+			publicUrl: `${baseUrl()}/storage/v1/object/public/media/${folder}/${r.name}`
+		}));
+}
+
+/**
+ * Delete a file from the 'media' bucket by its path (e.g. `uploads/xyz.jpg`).
+ * @param {string} path
+ */
+export async function storageDelete(path) {
+	const res = await fetch(`${baseUrl()}/storage/v1/object/media/${path}`, {
+		method: 'DELETE',
+		headers: headers()
+	});
+	await check(res, 'storage delete');
 }

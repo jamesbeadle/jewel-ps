@@ -1,7 +1,6 @@
 <script>
 	import { enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
-	import Icon from '$lib/components/Icon.svelte';
 
 	let { data, form } = $props();
 
@@ -69,161 +68,135 @@
 	function mailtoFor(s) {
 		return `mailto:${s}?subject=${encodeURIComponent('Re: your enquiry to Jewel Property Serve')}`;
 	}
-
-	const btn =
-		'inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1.5 font-display text-xs font-semibold text-grey transition hover:border-gold hover:text-gold disabled:opacity-50';
 </script>
 
 <svelte:head>
 	<title>Enquiries | Admin | Jewel Property Serve</title>
 </svelte:head>
 
-<header class="flex flex-wrap items-end justify-between gap-4">
+<header class="head">
 	<div>
-		<p class="kicker">Website enquiries</p>
-		<h1 class="mt-3 text-3xl sm:text-4xl">Inbox</h1>
-		<p class="mt-1 text-sm text-grey">
+		<h1>Enquiries</h1>
+		<p class="head__sub">
 			Requests from the contact form. Unread ones are highlighted; opening one marks it read.
 		</p>
 	</div>
 
-	<nav class="flex gap-1 rounded-full border border-white/10 bg-night-2 p-1" aria-label="Inbox view">
-		<a
-			href="/admin/enquiries"
-			class="rounded-full px-4 py-1.5 font-display text-sm font-medium transition {data.view === 'inbox' ? 'bg-blue/30 text-white' : 'text-grey hover:text-white'}"
-			aria-current={data.view === 'inbox' ? 'page' : undefined}
-		>
+	<nav class="tabs" aria-label="Inbox view">
+		<a href="/admin/enquiries" class="tab" class:tab--on={data.view === 'inbox'} aria-current={data.view === 'inbox' ? 'page' : undefined}>
 			Inbox
-			{#if data.newCount > 0}<span class="ml-1 rounded-full bg-gold px-1.5 text-[11px] font-semibold text-night">{data.newCount}</span>{/if}
+			{#if data.newCount > 0}<span class="tab__badge">{data.newCount}</span>{/if}
 		</a>
-		<a
-			href="/admin/enquiries?view=archived"
-			class="rounded-full px-4 py-1.5 font-display text-sm font-medium transition {data.view === 'archived' ? 'bg-blue/30 text-white' : 'text-grey hover:text-white'}"
-			aria-current={data.view === 'archived' ? 'page' : undefined}
-		>
-			Archived <span class="ml-1 text-xs text-grey/70">{data.archivedCount}</span>
+		<a href="/admin/enquiries?view=archived" class="tab" class:tab--on={data.view === 'archived'} aria-current={data.view === 'archived' ? 'page' : undefined}>
+			Archived <span class="tab__count">{data.archivedCount}</span>
 		</a>
 	</nav>
 </header>
 
 {#if !data.configured}
-	<div class="mt-8 max-w-3xl rounded-2xl border border-gold/30 bg-gold/10 px-5 py-4 text-sm leading-relaxed text-grey">
-		<strong class="text-white">Supabase is not connected</strong> — set <code class="text-gold">SUPABASE_URL</code> and
-		<code class="text-gold">SUPABASE_SERVICE_ROLE_KEY</code> to switch the inbox on.
-	</div>
+	<p class="warn">
+		<strong>Supabase is not connected</strong> — set <code>SUPABASE_URL</code> and
+		<code>SUPABASE_SERVICE_ROLE_KEY</code> to switch the inbox on.
+	</p>
 {:else if data.dbError}
-	<div class="mt-8 max-w-3xl rounded-2xl border border-red-400/30 bg-red-500/10 px-5 py-4 text-sm text-grey">
-		<strong class="text-white">Couldn't load enquiries.</strong>
-		<code class="mt-2 block break-words text-xs text-red-200">{data.dbError}</code>
-	</div>
+	<p class="warn">
+		<strong>Couldn't load enquiries.</strong>
+		<br /><code class="warn__detail">{data.dbError}</code>
+	</p>
 {:else if form?.error}
-	<p class="mt-6 rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-200" role="alert">{form.error}</p>
+	<p class="err" role="alert">{form.error}</p>
 {/if}
 
 {#if data.configured && !data.dbError}
 	{#if data.rows.length === 0}
-		<div class="card mt-8 max-w-3xl p-10 text-center">
-			<span class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-blue/20 text-blue-light"><Icon name="mail" size={26} /></span>
-			<p class="mt-5 font-display text-lg font-semibold">
+		<div class="card empty">
+			<p class="empty__title">
 				{data.view === 'archived' ? 'Nothing archived' : 'No enquiries yet'}
 			</p>
-			<p class="mt-1 text-sm text-grey">
+			<p class="empty__sub">
 				{data.view === 'archived' ? 'Archived enquiries will be kept here.' : 'New quote requests from the website will appear here instantly.'}
 			</p>
 		</div>
 	{:else}
-		<ul class="mt-8 max-w-4xl space-y-3">
+		<ul class="list">
 			{#each data.rows as r (r.id)}
 				{@const expanded = open.has(r.id)}
-				<li id="e-{r.id}" class="card overflow-hidden transition {r.status === 'new' ? '!border-gold/40' : ''}">
-					<button
-						type="button"
-						class="flex w-full items-start gap-4 px-5 py-4 text-left transition hover:bg-white/[0.03]"
-						onclick={() => toggle(r)}
-						aria-expanded={expanded}
-					>
-						<span class="mt-2 h-2 w-2 shrink-0 rounded-full {r.status === 'new' ? 'bg-gold shadow-[0_0_0_3px_rgba(192,154,81,0.25)]' : 'bg-white/20'}" aria-hidden="true"></span>
-						<span class="min-w-0 flex-1">
-							<span class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-								<span class="font-display font-semibold {r.status === 'new' ? 'text-white' : 'text-white/85'}">{r.name}</span>
-								{#if r.service}
-									<span class="rounded-full bg-blue/20 px-2 py-0.5 text-[11px] font-medium text-blue-light">{r.service}</span>
-								{/if}
-								{#if r.postcode}
-									<span class="text-xs text-grey/70">{r.postcode}</span>
-								{/if}
+				<li id="e-{r.id}" class="card row" class:row--new={r.status === 'new'}>
+					<button type="button" class="row__head" onclick={() => toggle(r)} aria-expanded={expanded}>
+						<span class="row__dot" class:row__dot--new={r.status === 'new'} aria-hidden="true"></span>
+						<span class="row__main">
+							<span class="row__meta">
+								<span class="row__name">{r.name}</span>
+								{#if r.service}<span class="row__service">{r.service}</span>{/if}
+								{#if r.postcode}<span class="row__postcode">{r.postcode}</span>{/if}
 							</span>
-							<span class="mt-1 block text-sm text-grey {expanded ? 'whitespace-pre-line' : 'truncate'}">{r.message}</span>
+							<span class="row__message" class:row__message--open={expanded}>{r.message}</span>
 						</span>
-						<span class="shrink-0 text-right text-xs text-grey/70">
+						<span class="row__side">
 							<time datetime={r.created_at} title={fmt(r.created_at)}>{ago(r.created_at)}</time>
-							<span class="mt-1 block text-gold transition {expanded ? 'rotate-180' : ''}">▾</span>
+							<span class="row__chev" class:row__chev--open={expanded}>▾</span>
 						</span>
 					</button>
 
 					{#if expanded}
-						<div class="border-t border-white/[0.06] bg-night-3/40 px-5 py-4">
-							<dl class="grid gap-x-8 gap-y-2 text-sm sm:grid-cols-2">
-								<div class="flex items-center gap-2">
-									<dt class="sr-only">Email</dt>
-									<span class="text-blue-light"><Icon name="mail" size={16} /></span>
-									<dd><a href={mailtoFor(r.email)} class="text-white underline-offset-2 hover:text-gold hover:underline">{r.email}</a></dd>
+						<div class="row__detail">
+							<dl class="detail-grid">
+								<div>
+									<dt>Email</dt>
+									<dd><a href={mailtoFor(r.email)}>{r.email}</a></dd>
 								</div>
-								<div class="flex items-center gap-2">
-									<dt class="sr-only">Phone</dt>
-									<span class="text-blue-light"><Icon name="phone" size={16} /></span>
+								<div>
+									<dt>Phone</dt>
 									<dd>
-										{#if r.phone}<a href="tel:{r.phone.replace(/\s+/g, '')}" class="text-white hover:text-gold">{r.phone}</a>{:else}<span class="text-grey/60">No phone given</span>{/if}
+										{#if r.phone}<a href="tel:{r.phone.replace(/\s+/g, '')}">{r.phone}</a>{:else}<span class="muted">No phone given</span>{/if}
 									</dd>
 								</div>
-								<div class="flex items-center gap-2">
-									<dt class="sr-only">Postcode</dt>
-									<span class="text-blue-light"><Icon name="pin" size={16} /></span>
-									<dd class="text-white">{r.postcode || '—'}</dd>
+								<div>
+									<dt>Postcode</dt>
+									<dd>{r.postcode || '—'}</dd>
 								</div>
-								<div class="flex items-center gap-2">
-									<dt class="sr-only">Received</dt>
-									<span class="text-blue-light"><Icon name="clock" size={16} /></span>
-									<dd class="text-white">{fmt(r.created_at)}</dd>
+								<div>
+									<dt>Received</dt>
+									<dd>{fmt(r.created_at)}</dd>
 								</div>
 							</dl>
 
-							<div class="mt-4 flex flex-wrap items-center gap-2">
-								<a href={mailtoFor(r.email)} class="btn-gold !px-4 !py-2 !text-xs">Reply by email</a>
+							<div class="actions">
+								<a href={mailtoFor(r.email)} class="btn btn--primary btn--sm">Reply by email</a>
 
 								{#if r.status === 'archived'}
 									<form method="POST" action="?/restore" use:enhance>
 										<input type="hidden" name="id" value={r.id} />
-										<button class={btn}>Restore to inbox</button>
+										<button class="btn btn--outline btn--sm">Restore to inbox</button>
 									</form>
 								{:else}
 									{#if r.status === 'new'}
 										<form method="POST" action="?/markRead" use:enhance>
 											<input type="hidden" name="id" value={r.id} />
-											<button class={btn}>Mark read</button>
+											<button class="btn btn--outline btn--sm">Mark read</button>
 										</form>
 									{:else}
 										<form method="POST" action="?/markUnread" use:enhance>
 											<input type="hidden" name="id" value={r.id} />
-											<button class={btn}>Mark unread</button>
+											<button class="btn btn--outline btn--sm">Mark unread</button>
 										</form>
 									{/if}
 									<form method="POST" action="?/archive" use:enhance>
 										<input type="hidden" name="id" value={r.id} />
-										<button class={btn}>Archive</button>
+										<button class="btn btn--outline btn--sm">Archive</button>
 									</form>
 								{/if}
 
-								<span class="ml-auto"></span>
+								<span class="actions__spacer"></span>
 								{#if confirmDelete === r.id}
 									<form method="POST" action="?/remove" use:enhance={() => { confirmDelete = null; return async ({ update }) => update(); }}>
 										<input type="hidden" name="id" value={r.id} />
-										<span class="mr-2 text-xs text-red-200">Delete permanently?</span>
-										<button class="{btn} !border-red-400/50 !text-red-200 hover:!border-red-300">Yes, delete</button>
+										<span class="danger-note">Delete permanently?</span>
+										<button class="linkish linkish--danger">Yes, delete</button>
 									</form>
-									<button type="button" class={btn} onclick={() => (confirmDelete = null)}>Cancel</button>
+									<button type="button" class="linkish" onclick={() => (confirmDelete = null)}>Cancel</button>
 								{:else}
-									<button type="button" class="{btn} !border-transparent text-grey/60 hover:!border-red-400/50 hover:!text-red-200" onclick={() => (confirmDelete = r.id)}>Delete</button>
+									<button type="button" class="linkish linkish--danger" onclick={() => (confirmDelete = r.id)}>Delete</button>
 								{/if}
 							</div>
 						</div>
@@ -233,15 +206,338 @@
 		</ul>
 
 		{#if data.totalPages > 1}
-			<nav class="mt-8 flex max-w-4xl items-center justify-between text-sm text-grey" aria-label="Pagination">
+			<nav class="pager" aria-label="Pagination">
 				{#if data.page > 1}
-					<a href={pageHref(String(data.page - 1))} class={btn}>← Newer</a>
+					<a href={pageHref(String(data.page - 1))} class="btn btn--outline btn--sm">← Newer</a>
 				{:else}<span></span>{/if}
-				<span>Page {data.page} of {data.totalPages} · {data.total} total</span>
+				<span class="pager__label">Page {data.page} of {data.totalPages} · {data.total} total</span>
 				{#if data.page < data.totalPages}
-					<a href={pageHref(String(data.page + 1))} class={btn}>Older →</a>
+					<a href={pageHref(String(data.page + 1))} class="btn btn--outline btn--sm">Older →</a>
 				{:else}<span></span>{/if}
 			</nav>
 		{/if}
 	{/if}
 {/if}
+
+<style>
+	.head {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 1rem;
+		flex-wrap: wrap;
+		margin-bottom: 1.4rem;
+	}
+
+	.head h1 {
+		margin-bottom: 0.1rem;
+	}
+
+	.head__sub {
+		color: var(--ink-600);
+		margin: 0;
+		font-size: 0.95rem;
+	}
+
+	.tabs {
+		display: flex;
+		gap: 0.25rem;
+		background: var(--tint);
+		border: 1px solid var(--line);
+		border-radius: 999px;
+		padding: 0.25rem;
+	}
+
+	.tab {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		border-radius: 999px;
+		padding: 0.35rem 1rem;
+		font-family: var(--font-display);
+		font-size: 0.9rem;
+		font-weight: 500;
+		color: var(--ink-600);
+		text-decoration: none;
+	}
+
+	.tab:hover {
+		color: var(--ink-900);
+	}
+
+	.tab--on {
+		background: var(--accent-500);
+		color: #fff;
+	}
+
+	.tab__badge {
+		background: var(--gold-500);
+		color: #fff;
+		font-size: 0.7rem;
+		font-weight: 600;
+		border-radius: 999px;
+		padding: 0.05rem 0.45rem;
+		line-height: 1.5;
+	}
+
+	.tab__count {
+		font-size: 0.78rem;
+		opacity: 0.7;
+	}
+
+	.warn {
+		background: #fdf6ec;
+		border: 1px solid #f0dfc0;
+		border-radius: var(--radius);
+		padding: 0.9rem 1.1rem;
+		color: var(--ink-600);
+		max-width: 46rem;
+	}
+
+	.warn__detail {
+		display: inline-block;
+		margin-top: 0.5rem;
+		font-size: 0.82rem;
+		word-break: break-word;
+		color: #8a5a2a;
+	}
+
+	.err {
+		background: #fdf1ee;
+		border: 1px solid #f0cfc7;
+		color: #a33a2a;
+		border-radius: var(--radius);
+		padding: 0.6rem 1rem;
+		max-width: 46rem;
+	}
+
+	.empty {
+		max-width: 48rem;
+		padding: 2.6rem;
+		text-align: center;
+	}
+
+	.empty__title {
+		font-family: var(--font-display);
+		font-weight: 600;
+		font-size: 1.1rem;
+		margin: 0 0 0.2rem;
+	}
+
+	.empty__sub {
+		color: var(--ink-600);
+		font-size: 0.92rem;
+		margin: 0;
+	}
+
+	.list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: 0.7rem;
+		max-width: 60rem;
+	}
+
+	.row {
+		overflow: hidden;
+	}
+
+	.row--new {
+		border-color: var(--gold-300);
+	}
+
+	.row__head {
+		font: inherit;
+		display: flex;
+		align-items: flex-start;
+		gap: 0.9rem;
+		width: 100%;
+		padding: 1rem 1.2rem;
+		text-align: left;
+		background: none;
+		border: 0;
+		cursor: pointer;
+	}
+
+	.row__head:hover {
+		background: rgba(19, 28, 42, 0.03);
+	}
+
+	.row__dot {
+		flex-shrink: 0;
+		margin-top: 0.5rem;
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: var(--line);
+	}
+
+	.row__dot--new {
+		background: var(--gold-500);
+		box-shadow: 0 0 0 3px rgba(192, 154, 81, 0.25);
+	}
+
+	.row__main {
+		min-width: 0;
+		flex: 1;
+	}
+
+	.row__meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.3rem 0.7rem;
+	}
+
+	.row__name {
+		font-family: var(--font-display);
+		font-weight: 600;
+		color: var(--ink-900);
+	}
+
+	.row__service {
+		background: var(--accent-100);
+		color: var(--accent-600);
+		border-radius: 999px;
+		padding: 0.08rem 0.6rem;
+		font-size: 0.72rem;
+		font-weight: 500;
+	}
+
+	.row__postcode {
+		color: var(--ink-400);
+		font-size: 0.8rem;
+	}
+
+	.row__message {
+		display: block;
+		margin-top: 0.25rem;
+		color: var(--ink-600);
+		font-size: 0.92rem;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.row__message--open {
+		white-space: pre-line;
+		overflow: visible;
+	}
+
+	.row__side {
+		flex-shrink: 0;
+		text-align: right;
+		color: var(--ink-400);
+		font-size: 0.8rem;
+	}
+
+	.row__chev {
+		display: block;
+		margin-top: 0.2rem;
+		color: var(--accent-500);
+		transition: transform 0.15s ease;
+	}
+
+	.row__chev--open {
+		transform: rotate(180deg);
+	}
+
+	.row__detail {
+		border-top: 1px solid var(--line);
+		background: var(--tint);
+		padding: 1rem 1.2rem 1.1rem;
+	}
+
+	.detail-grid {
+		display: grid;
+		gap: 0.5rem 2rem;
+		margin: 0;
+		font-size: 0.9rem;
+	}
+
+	@media (min-width: 640px) {
+		.detail-grid {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+
+	.detail-grid dt {
+		font-size: 0.72rem;
+		font-weight: 600;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--ink-400);
+	}
+
+	.detail-grid dd {
+		margin: 0.05rem 0 0;
+		color: var(--ink-900);
+	}
+
+	.detail-grid a {
+		color: var(--accent-600);
+	}
+
+	.muted {
+		color: var(--ink-400);
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.6rem;
+		margin-top: 1rem;
+	}
+
+	.actions__spacer {
+		margin-left: auto;
+	}
+
+	.btn--sm {
+		padding: 0.4rem 1rem;
+		font-size: 0.84rem;
+	}
+
+	.danger-note {
+		color: #a33a2a;
+		font-size: 0.82rem;
+		margin-right: 0.4rem;
+	}
+
+	.linkish {
+		font: inherit;
+		font-size: 0.86rem;
+		background: none;
+		border: 0;
+		padding: 0.2rem 0.1rem;
+		cursor: pointer;
+		color: var(--ink-600);
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		text-decoration-thickness: 1px;
+	}
+
+	.linkish:hover {
+		color: var(--ink-900);
+	}
+
+	.linkish--danger {
+		color: #a33a2a;
+	}
+
+	.pager {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-top: 1.3rem;
+		max-width: 60rem;
+	}
+
+	.pager__label {
+		color: var(--ink-400);
+		font-size: 0.9rem;
+	}
+</style>

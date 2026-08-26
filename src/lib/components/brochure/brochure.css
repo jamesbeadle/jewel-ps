@@ -1,0 +1,213 @@
+/* ---------------------------------------------------------------------------
+   Jewel Property Serve — brochure design system
+   The print-quality A4 brochure, in the PS brand: cool white stock,
+   Switzer display headings, letter-spaced PS Blue kickers, gold accents,
+   deep navy footer band and back cover. All sizes in mm/pt so the rendered
+   page is exactly A4 both on screen and in the generated PDF.
+   (Same architecture as the jewelbb.co.uk brochure builder.)
+--------------------------------------------------------------------------- */
+
+@font-face {
+	font-family: 'Switzer';
+	font-style: normal;
+	font-weight: 300;
+	src: url('/fonts/switzer-latin-300-normal.woff2') format('woff2');
+}
+@font-face {
+	font-family: 'Switzer';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/switzer-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+	font-family: 'Switzer';
+	font-style: normal;
+	font-weight: 500;
+	src: url('/fonts/switzer-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+	font-family: 'Switzer';
+	font-style: normal;
+	font-weight: 600;
+	src: url('/fonts/switzer-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+	font-family: 'Outfit';
+	font-style: normal;
+	font-weight: 100 900;
+	src: url('/fonts/outfit-latin-wght-normal.woff2') format('woff2');
+}
+
+.bdoc {
+	--b-paper: #f8f9fb; /* cool white stock */
+	--b-paper-cover: #fbfcfd;
+	--b-ink: #131c2a;
+	--b-ink-soft: #2e3a4d;
+	--b-ink-muted: #7d8794;
+	--b-accent: #135eaa; /* PS Blue kickers & rules */
+	--b-accent-deep: #0c4482;
+	--b-gold: #c09a51; /* Jewel Gold */
+	--b-dark: #0a111d; /* footer band / back cover */
+	--b-serif: 'Switzer', 'Inter', -apple-system, sans-serif; /* display face */
+	--b-sans: 'Outfit', 'Geom Graphic', Arial, sans-serif; /* body face */
+
+	font-family: var(--b-sans);
+	color: var(--b-ink);
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+/* ---- The page ----------------------------------------------------------- */
+.bpage {
+	position: relative;
+	width: 210mm;
+	height: 297mm;
+	background: var(--b-paper);
+	overflow: hidden;
+	page-break-after: always;
+	break-after: page;
+	display: flex;
+	flex-direction: column;
+}
+
+/* No break after the final sheet — avoids a trailing blank PDF page. */
+.bpage:last-child {
+	page-break-after: auto;
+	break-after: auto;
+}
+
+.bpage--cover {
+	background: var(--b-paper-cover);
+}
+
+.bpage--dark {
+	background: var(--b-dark);
+	color: #dfe5ec;
+}
+
+/* Standard content area inside a page */
+.bpage__body {
+	flex: 1;
+	padding: 24mm 22mm 14mm;
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+}
+
+/* ---- Type ---------------------------------------------------------------- */
+.b-kicker {
+	font-family: var(--b-sans);
+	font-size: 8.5pt;
+	font-weight: 600;
+	letter-spacing: 0.32em;
+	text-transform: uppercase;
+	color: var(--b-accent);
+	margin: 0 0 4.5mm;
+}
+
+.b-title {
+	font-family: var(--b-serif);
+	font-weight: 500;
+	font-size: 26pt;
+	line-height: 1.1;
+	letter-spacing: -0.015em;
+	color: var(--b-ink);
+	margin: 0 0 4mm;
+}
+
+.b-rule {
+	width: 26mm;
+	height: 0.6mm;
+	background: var(--b-gold);
+	border: 0;
+	margin: 0 0 8mm;
+}
+
+.b-body {
+	font-size: 9.5pt;
+	line-height: 1.65;
+	color: var(--b-ink-soft);
+}
+
+.b-body p {
+	margin: 0 0 3.2mm;
+}
+
+/* ---- Footer band --------------------------------------------------------- */
+.bpage__num {
+	position: absolute;
+	bottom: 11mm;
+	left: 0;
+	right: 0;
+	text-align: center;
+	font-size: 7pt;
+	letter-spacing: 0.12em;
+	color: var(--b-ink-muted);
+}
+
+.bpage__band {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 7.5mm;
+	background: var(--b-dark);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.bpage__band span {
+	color: var(--b-gold);
+	font-size: 7.5pt;
+	letter-spacing: 0.06em;
+}
+
+/* ---- Wordmark ------------------------------------------------------------ */
+.b-wordmark {
+	text-align: center;
+}
+
+.b-wordmark__jewel {
+	font-family: var(--b-serif);
+	font-weight: 500;
+	font-size: 24pt;
+	letter-spacing: 0.42em;
+	margin-right: -0.42em; /* optically recentre the tracked text */
+	color: var(--b-accent);
+}
+
+.bpage--dark .b-wordmark__jewel {
+	color: var(--b-gold);
+}
+
+.b-wordmark__sub {
+	font-family: var(--b-sans);
+	font-size: 9pt;
+	font-weight: 600;
+	letter-spacing: 0.38em;
+	margin-right: -0.38em;
+	color: var(--b-gold);
+	margin-top: 2mm;
+}
+
+/* ---- Images -------------------------------------------------------------- */
+.b-img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* Placeholder shown where a photo hasn't been chosen yet */
+.b-img--empty {
+	background:
+		repeating-linear-gradient(45deg, #e8ecf2, #e8ecf2 6px, #dfe4ec 6px, #dfe4ec 12px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #97a1ae;
+	font-size: 8pt;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}

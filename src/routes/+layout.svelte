@@ -11,7 +11,11 @@
 	let innerHeight = $state(800);
 	const scrolled = $derived(scrollY > 24);
 	// The admin area (/admin) brings its own chrome — no site header, footer or call bar.
-	const isAdmin = $derived($page.url.pathname.startsWith('/admin'));
+	// The brochure print route is captured by the PDF generator and must be a
+	// bare document — nothing but the A4 pages.
+	const isAdmin = $derived(
+		$page.url.pathname.startsWith('/admin') || $page.url.pathname.startsWith('/brochure/print')
+	);
 	// The mobile call bar only appears once the hero (and its own CTA) has scrolled away.
 	const showCallBar = $derived(!isAdmin && scrollY > innerHeight * 0.9 && $page.url.pathname !== '/contact');
 
@@ -171,6 +175,7 @@
 					<ul class="mt-5 space-y-3 text-sm">
 						<li><a href="/about" class="transition hover:text-gold">About us</a></li>
 						<li><a href="/about#values" class="transition hover:text-gold">Our values</a></li>
+						<li><a href="/brochure" class="transition hover:text-gold">Our brochure</a></li>
 						<li><a href="/about#ecologi" class="transition hover:text-gold">Sustainability</a></li>
 						<li><a href="/contact#faqs" class="transition hover:text-gold">FAQs</a></li>
 						<li><a href="/contact#careers" class="transition hover:text-gold">Careers</a></li>

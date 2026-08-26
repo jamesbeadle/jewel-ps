@@ -96,6 +96,31 @@ export async function verifySessionToken(token) {
 	return safeEqual(await hmac(payload, secret()), sig);
 }
 
+/* ---- Print tokens ------------------------------------------------------
+   Short-lived, brochure-scoped tokens that let the headless PDF browser
+   open a draft brochure's print page without carrying the admin cookie. */
+
+const PRINT_TOKEN_MINUTES = 10;
+
+/** @param {string} brochureId */
+export async function createPrintToken(brochureId) {
+	const expires = String(Date.now() + PRINT_TOKEN_MINUTES * 60_000);
+	const sig = await hmac(`print.${brochureId}.${expires}`, secret());
+	return `${expires}.${sig}`;
+}
+
+/**
+ * @param {string} brochureId
+ * @param {string | null | undefined} token
+ */
+export async function verifyPrintToken(brochureId, token) {
+	if (!token || !secret()) return false;
+	const [expires, sig] = token.split('.');
+	if (!expires || !sig) return false;
+	if (Number(expires) < Date.now()) return false;
+	return (await hmac(`print.${brochureId}.${expires}`, secret())) === sig;
+}
+
 /**
  * @param {import('@sveltejs/kit').Cookies} cookies
  * @param {string} token

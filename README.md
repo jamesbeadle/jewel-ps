@@ -13,6 +13,8 @@ Follows the Jewel Enterprise Brand Guidelines 2026 (PS Blue `#135EAA`, Jewel Gol
 | `/maintenance` | All 17 maintenance services, managing-agent support |
 | `/fire-flood-restoration` | Restoration services, four-step claims process |
 | `/contact` | Contact cards, map, enquiry form (server action), FAQs |
+| `/brochure` | The active brochure from the admin builder, viewable as A4 pages + "Download PDF" |
+| `/rtw` | Right to Work check tool (internal compliance; noindex, blocked in robots.txt) |
 | `/privacy` | Privacy notice |
 | `/sitemap.xml`, `/robots.txt` | Generated |
 
@@ -26,39 +28,57 @@ Old Webflow URLs (`/about-us-jewel-property-serve.html` etc.) 301-redirect to th
 - **Header / footer / mobile menu / sticky call bar** — `src/routes/+layout.svelte`.
 - **Shared sections** — `src/lib/components/` (PageHero, Testimonials, CtaBand, Faq, Accreditations, Seo, Icon, Facets).
 - **Logos** — `static/images/logos/` (from the official logo pack).
-- **Admin area** — `src/routes/admin/` (see below); auth in `src/lib/server/auth.js`, Supabase client in `src/lib/server/db.js`.
+- **Photography** — `static/images/photos/` (self-hosted asset library recovered from the old Webflow site); the picker groups live in `src/lib/data/photos.js`.
+- **Brochure builder** — templates & default content in `src/lib/brochure/`, A4 page renderers in `src/lib/components/brochure/`, data access in `src/lib/server/brochures.js`, PDF rendering in `src/lib/server/pdf.js`.
+- **Admin area** — `src/routes/admin/` (see below); shared admin look in `src/routes/admin/admin.css`, auth in `src/lib/server/auth.js`, Supabase client + storage in `src/lib/server/db.js`.
 
-## Admin area & enquiries inbox
+## Admin area
 
-There's a lightweight admin at **`/admin`** (discreet link in the footer, `noindex`, blocked in `robots.txt`) — the same
-approach as the jewelbb.co.uk site:
+There's a full admin at **`/admin`** (discreet link in the footer, `noindex`, blocked in `robots.txt`) — the same
+structure and look as the jewelbb.co.uk admin:
 
 - **Enquiries** — every contact-form submission is stored in Supabase and shown as an inbox: unread badge, open to read
   (marks it read), reply-by-email, archive/restore, delete, pagination. The n8n webhook still fires for email
   notifications, so you get both.
+- **Media** — a photo library backed by Supabase Storage (public `media` bucket). Photos upload straight to storage at
+  full resolution via short-lived signed URLs (sidesteps Vercel's ~4.5 MB body cap), and every image the site ships
+  with is browsable too, with copy-URL everywhere.
+- **Brochures** — the full brochure builder from jewelbb.co.uk, redesigned for the PS brand. Compose print-quality A4
+  brochures page by page from designed templates (cover, introduction, services, process, case-study spreads, gallery,
+  team, testimonials, back cover), with a live A4 preview and the media picker on every image field. Keep brochures in
+  draft and make one **active** — that's what visitors see at `/brochure` and download as a PDF. PDFs are rendered
+  server-side with headless Chromium (`puppeteer-core` + `@sparticuz/chromium`), so the output is identical to the
+  designed pages every time. A new brochure can be seeded from the built-in Jewel PS layout, which is also the fallback
+  shown at `/brochure` before anything is published.
+- **RTW checks** — every Right to Work check completed at `/rtw` (Jeremy's guided check tool, entity `JPS`) is logged
+  to a register viewable here; the tool's copy-row and print outputs are unchanged.
 - **Login** — one shared username/password from env vars, held in a signed `httpOnly` cookie for 8 hours. No accounts
   table, no third-party auth.
 - **Supabase** — talked to over plain `fetch` with the service-role key (no SDK). Tables have RLS enabled with no
   policies, so nothing is reachable with the public anon key.
 
-If Supabase isn't configured the public site is unaffected: the form still delivers via the webhook and the dashboard
-explains what's missing.
+If Supabase isn't configured the public site is unaffected: the form still delivers via the webhook, `/brochure` shows
+the built-in default, and the dashboard explains what's missing.
 
 **Setup (once):**
 
-1. Create a Supabase project for Jewel PS. In **SQL Editor**, paste `supabase/schema.sql` and Run (creates the
-   `enquiries` table and locks it down).
+1. In the Jewel PS Supabase project's **SQL Editor**, run `supabase/schema.sql` (enquiries) and
+   `supabase/2026-08-26-admin.sql` (media bucket, brochures, RTW register). *Both have already been applied to the
+   live `jewel-ps` project.*
 2. **Project Settings → API**: copy the **Project URL** and **service_role** key into `SUPABASE_URL` /
    `SUPABASE_SERVICE_ROLE_KEY` (locally in `.env`, and on Vercel). The service-role key bypasses RLS — server only,
    never commit it.
 3. Set `ADMIN_USERNAME` / `ADMIN_PASSWORD` (and ideally a random `ADMIN_SESSION_SECRET`) for the login.
 4. Redeploy, then sign in at `/admin`.
 
+**PDF generation** — on Vercel nothing to configure (`@sparticuz/chromium` is bundled; the routes set
+`maxDuration: 60`). Locally it uses an installed Chrome/Chromium automatically, or set `PDF_CHROME_PATH`.
+
 ## Launch checklist
 
-1. **Photography** — images are still hot-linked from the live site. Before the old site is switched off, run
-   `bash scripts/fetch-assets.sh` (Mac/Linux) or `powershell -ExecutionPolicy Bypass -File scripts\fetch-assets.ps1` (Windows),
-   then set `VITE_IMG_BASE=/images/photos` in `.env` and in Vercel. Better still, replace them with fresh, high-res project photography — the parallax hero deserves it.
+1. **Photography** — ✅ done: the full image library from the old site now lives in `static/images/photos/` and
+   `VITE_IMG_BASE=/images/photos` is set in `.env` — remember to set the same variable in Vercel so the deployed site
+   self-hosts too. (`scripts/fetch-assets.sh` remains only as a fallback.)
 2. **Contact form** — set `FORM_WEBHOOK_URL` (and optionally `FORM_WEBHOOK_SECRET`) in Vercel → Settings → Environment Variables.
    Any JSON webhook works; an n8n *Webhook* node → *Send Email* is the simplest. The form posts:
    `{ source, submittedAt, ip, userAgent, name, email, phone, postcode, service, message }` with header `x-jewel-secret`.

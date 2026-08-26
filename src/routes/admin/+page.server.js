@@ -1,4 +1,5 @@
 import { dbConfigured, dbCount, dbSelect } from '$lib/server/db.js';
+import { uploadedImageLibrary } from '$lib/server/brochures.js';
 
 /** @type {import('./$types').PageServerLoad} */
 export const load = async () => {
@@ -6,6 +7,12 @@ export const load = async () => {
 	let enquiryCount = null;
 	let newEnquiryCount = 0;
 	let weekCount = 0;
+	/** @type {number | null} */
+	let brochureCount = null;
+	/** @type {number | null} */
+	let rtwCount = null;
+	/** @type {number | null} */
+	let mediaCount = null;
 	/** @type {import('$lib/server/db.js').EnquiryRow[]} */
 	let recentEnquiries = [];
 	/** @type {string | null} */
@@ -26,6 +33,23 @@ export const load = async () => {
 		} catch (e) {
 			dbError = (e instanceof Error ? e.message : 'Unknown error').slice(0, 400);
 		}
+		// Newer tables (supabase/2026-08-26-admin.sql) — may not exist yet.
+		// Separate tries so a missing table never breaks the tiles above.
+		try {
+			brochureCount = await dbCount('brochures');
+		} catch {
+			brochureCount = null;
+		}
+		try {
+			rtwCount = await dbCount('rtw_submissions');
+		} catch {
+			rtwCount = null;
+		}
+		try {
+			mediaCount = (await uploadedImageLibrary()).length;
+		} catch {
+			mediaCount = null;
+		}
 	}
 
 	return {
@@ -33,6 +57,9 @@ export const load = async () => {
 		enquiryCount,
 		newEnquiryCount,
 		weekCount,
+		brochureCount,
+		rtwCount,
+		mediaCount,
 		recentEnquiries,
 		dbError
 	};

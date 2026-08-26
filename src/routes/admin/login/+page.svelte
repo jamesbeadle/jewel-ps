@@ -4,39 +4,37 @@
 
 	let { data, form } = $props();
 	let submitting = $state(false);
-
-	const inputClass =
-		'w-full rounded-xl border border-white/10 bg-night-3 px-4 py-3 text-white placeholder:text-grey/50 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold';
 </script>
 
 <svelte:head>
 	<title>Admin login | Jewel Property Serve</title>
 </svelte:head>
 
-<div class="flex min-h-[70vh] items-center justify-center">
-	<div class="card w-full max-w-sm p-8">
-		<img src={site.logo} alt="Jewel Property Serve" class="h-9 w-auto" width="290" height="94" />
-		<h1 class="mt-6 text-2xl">Admin login</h1>
-		<p class="mt-1 text-sm text-grey">Website enquiries and content.</p>
+<div class="login">
+	<div class="card login__card">
+		<div class="login__logo">
+			<img src={site.logo} alt="Jewel Property Serve" width="290" height="94" />
+		</div>
+		<h1>Admin login</h1>
+		<p class="login__sub">Enquiries, media, brochures and RTW checks.</p>
 
 		{#if !data.configured}
-			<p class="mt-5 rounded-xl border border-gold/30 bg-gold/10 px-4 py-3 text-sm text-grey">
-				Admin credentials are not configured. Set <code class="text-gold">ADMIN_USERNAME</code> and
-				<code class="text-gold">ADMIN_PASSWORD</code> environment variables, then redeploy.
+			<p class="login__warn">
+				Admin credentials are not configured. Set <code>ADMIN_USERNAME</code> and
+				<code>ADMIN_PASSWORD</code> environment variables, then redeploy.
 			</p>
 		{/if}
 		{#if form?.error}
-			<p class="mt-5 rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-200" role="alert">{form.error}</p>
+			<p class="login__error" role="alert">{form.error}</p>
 		{/if}
 		{#if form?.success}
-			<p class="mt-5 rounded-xl border border-green-400/30 bg-green-500/10 px-4 py-3 text-sm text-green-200" role="status">
-				Logged in — taking you to the dashboard… <a href="/admin" class="underline">Continue</a>
+			<p class="login__success" role="status">
+				Logged in — taking you to the dashboard… <a href="/admin">Continue</a>
 			</p>
 		{/if}
 
 		<form
 			method="POST"
-			class="mt-6 space-y-4"
 			use:enhance={() => {
 				submitting = true;
 				return async ({ result, update }) => {
@@ -50,19 +48,132 @@
 				};
 			}}
 		>
-			<label class="block">
-				<span class="mb-1.5 block font-display text-xs font-semibold uppercase tracking-kicker text-grey">Username</span>
-				<input name="username" autocomplete="username" required class={inputClass} />
+			<label>
+				Username
+				<input name="username" autocomplete="username" required />
 			</label>
-			<label class="block">
-				<span class="mb-1.5 block font-display text-xs font-semibold uppercase tracking-kicker text-grey">Password</span>
-				<input name="password" type="password" autocomplete="current-password" required class={inputClass} />
+			<label>
+				Password
+				<input name="password" type="password" autocomplete="current-password" required />
 			</label>
-			<button class="btn-gold w-full" type="submit" disabled={submitting}>
+			<button class="btn btn--primary" type="submit" disabled={submitting}>
 				{submitting ? 'Logging in…' : 'Log in'}
 			</button>
 		</form>
 
-		<a href="/" class="mt-6 block text-center text-xs text-grey/70 transition hover:text-gold">← Back to the website</a>
+		<a class="login__back" href="/">← Back to the website</a>
 	</div>
 </div>
+
+<style>
+	.login {
+		display: grid;
+		place-items: center;
+		min-height: 80vh;
+		padding: 2rem 0;
+	}
+
+	.login__card {
+		width: min(410px, 100%);
+		padding: 2.2rem 2.2rem 2.4rem;
+	}
+
+	.login__logo {
+		display: inline-flex;
+		background: #101826;
+		border-radius: 12px;
+		padding: 0.7rem 1rem;
+		margin-bottom: 1.4rem;
+	}
+
+	.login__logo img {
+		height: 2.1rem;
+		width: auto;
+		display: block;
+	}
+
+	.login__card h1 {
+		font-size: 1.5rem;
+		margin-bottom: 0.2rem;
+	}
+
+	.login__sub {
+		color: var(--ink-400);
+		font-size: 0.92rem;
+		margin-bottom: 1.4rem;
+	}
+
+	form {
+		display: grid;
+		gap: 1rem;
+	}
+
+	label {
+		display: grid;
+		gap: 0.3rem;
+		font-family: var(--font-display);
+		font-size: 0.92rem;
+		font-weight: 600;
+	}
+
+	input {
+		font: inherit;
+		font-family: var(--font-body);
+		font-weight: 400;
+		padding: 0.7rem 0.9rem;
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		background: #fff;
+	}
+
+	input:focus {
+		outline: 2px solid var(--accent-500);
+		outline-offset: 1px;
+	}
+
+	button {
+		justify-self: start;
+	}
+
+	.login__error {
+		color: #a33a2a;
+		background: #fdf1ee;
+		border: 1px solid #f0cfc7;
+		border-radius: var(--radius);
+		padding: 0.7rem 0.9rem;
+		margin: 0 0 1rem;
+		font-size: 0.92rem;
+	}
+
+	.login__success {
+		background: #eef7ee;
+		border: 1px solid #cfe6cf;
+		border-radius: var(--radius);
+		padding: 0.7rem 0.9rem;
+		margin: 0 0 1rem;
+		font-size: 0.92rem;
+	}
+
+	.login__warn {
+		color: var(--ink-600);
+		background: var(--tint);
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		padding: 0.7rem 0.9rem;
+		font-size: 0.9rem;
+		margin: 0 0 1rem;
+	}
+
+	.login__back {
+		display: block;
+		margin-top: 1.5rem;
+		text-align: center;
+		font-size: 0.85rem;
+		color: var(--ink-400);
+		text-decoration: none;
+	}
+
+	.login__back:hover {
+		color: var(--accent-500);
+	}
+</style>
