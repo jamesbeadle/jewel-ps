@@ -34,6 +34,10 @@
 	--shadow-soft: 0 2px 20px rgba(19, 28, 42, 0.06);
 	--shadow-lift: 0 12px 36px rgba(19, 28, 42, 0.12);
 
+	/* The public site sets color-scheme: dark on :root, which gives unstyled
+	   form controls dark browser defaults — the admin is a light UI. */
+	color-scheme: light;
+
 	min-height: 100vh;
 	background:
 		radial-gradient(60rem 20rem at 110% -5rem, rgba(19, 94, 170, 0.06), transparent 60%),
@@ -181,6 +185,15 @@
 .admin textarea {
 	color: var(--ink-900);
 	accent-color: var(--accent-500);
+}
+
+/* Light default background for text-like fields. :where() keeps specificity
+   low so component styles still win (e.g. the transparent brochure-title
+   rename input). */
+.admin input:where(:not([type='radio']):not([type='checkbox']):not([type='range']):not([type='file'])),
+.admin select,
+.admin textarea {
+	background-color: #fff;
 }
 
 .admin ::selection {
