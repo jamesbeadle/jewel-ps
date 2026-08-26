@@ -186,7 +186,7 @@
 		<div class="mt-16 flex flex-col gap-3 border-t border-white/[0.06] pt-8 text-xs text-grey/60 sm:flex-row sm:items-center sm:justify-between">
 			<span>© {new Date().getFullYear()} Jewel Property Serve Ltd. All rights reserved.</span>
 			<div class="flex gap-5">
-				<a href="/documents/terms-and-conditions.pdf" class="transition hover:text-gold">Terms &amp; conditions</a>
+				<a href="/documents/terms-and-conditions.pdf" target="_blank" rel="noopener" class="transition hover:text-gold">Terms &amp; conditions (PDF)</a>
 				<a href="/privacy" class="transition hover:text-gold">Privacy</a>
 			</div>
 		</div>

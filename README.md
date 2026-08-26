@@ -37,7 +37,7 @@ Old Webflow URLs (`/about-us-jewel-property-serve.html` etc.) 301-redirect to th
    `{ source, submittedAt, ip, userAgent, name, email, phone, postcode, service, message }` with header `x-jewel-secret`.
    Until it's set, the form shows an "email us instead" fallback with a pre-filled mailto.
 3. **Geom Graphic** — the licensed body font isn't in the repo; Outfit is the stand-in. Drop the `.woff2` files into `static/fonts/` and uncomment the `GEOM` block at the top of `src/app.css`.
-4. **Terms & conditions PDF** — copy the current T&Cs to `static/documents/terms-and-conditions.pdf` (the footer links to it).
+4. **Terms & conditions** — `static/documents/terms-and-conditions.pdf` is a client-facing Terms of Business (v1.0, Aug 2026) written for the new site; the source is `scripts/terms-and-conditions.html` — edit it and re-export to PDF from a browser (Print → Save as PDF, A4, background graphics on). Have it checked before launch.
 5. **Domain** — point `jewelps.co.uk` at Vercel under Project → Settings → Domains.
 
 ## Local development
