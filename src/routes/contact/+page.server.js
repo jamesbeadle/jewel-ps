@@ -1,19 +1,19 @@
 import { fail } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
 import { dbConfigured, dbInsert } from '$lib/server/db.js';
+import { emailConfigured, sendEnquiryEmail } from '$lib/server/email.js';
 
 /**
- * Contact form handler. Each submission is delivered two ways, either of
- * which is enough for the visitor to see "success":
+ * Contact form handler. Each submission is delivered up to three ways, any
+ * of which is enough for the visitor to see "success":
  *
  *  1. Stored in Supabase (`enquiries` table) so it appears in the admin
  *     inbox at /admin/enquiries — needs SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY.
- *  2. Posted as JSON to FORM_WEBHOOK_URL (e.g. an n8n Webhook node) for
- *     email notifications. Optional FORM_WEBHOOK_SECRET is sent as
- *     `x-jewel-secret` so the workflow can reject anything that didn't come
- *     from the site.
+ *  2. Emailed via Resend to CONTACT_TO_EMAIL (enquiries@jewelps.co.uk by
+ *     default) — needs RESEND_API_KEY; see src/lib/server/email.js.
+ *  3. Optionally posted as JSON to FORM_WEBHOOK_URL (legacy n8n webhook).
  *
- * With neither configured the form shows an "email us instead" fallback.
+ * With none configured the form shows an "email us instead" fallback.
  */
 export const actions = {
 	default: async ({ request, fetch, getClientAddress }) => {
@@ -40,8 +40,8 @@ export const actions = {
 		if (Object.keys(errors).length) return fail(400, { errors, values });
 
 		const endpoint = env.FORM_WEBHOOK_URL;
-		if (!endpoint && !dbConfigured()) {
-			console.warn('[contact] Neither FORM_WEBHOOK_URL nor Supabase is set — form submission not delivered.');
+		if (!endpoint && !dbConfigured() && !emailConfigured()) {
+			console.warn('[contact] None of Supabase, Resend or FORM_WEBHOOK_URL is set — form submission not delivered.');
 			return fail(503, { unavailable: true, values });
 		}
 
@@ -58,7 +58,17 @@ export const actions = {
 			}
 		}
 
-		// 2. Webhook (email notification)
+		// 2. Email notification via Resend
+		if (emailConfigured()) {
+			try {
+				await sendEnquiryEmail(values);
+				delivered = true;
+			} catch (err) {
+				console.error('[contact] Resend email failed:', err);
+			}
+		}
+
+		// 3. Legacy webhook (optional)
 		if (endpoint) {
 			try {
 				const res = await fetch(endpoint, {

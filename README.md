@@ -38,8 +38,8 @@ There's a full admin at **`/admin`** (discreet link in the footer, `noindex`, bl
 structure and look as the jewelbb.co.uk admin:
 
 - **Enquiries** — every contact-form submission is stored in Supabase and shown as an inbox: unread badge, open to read
-  (marks it read), reply-by-email, archive/restore, delete, pagination. The n8n webhook still fires for email
-  notifications, so you get both.
+  (marks it read), reply-by-email, archive/restore, delete, pagination. Each submission is also emailed to
+  `enquiries@jewelps.co.uk` via Resend, so you get both.
 - **Media** — a photo library backed by Supabase Storage (public `media` bucket). Photos upload straight to storage at
   full resolution via short-lived signed URLs (sidesteps Vercel's ~4.5 MB body cap), and every image the site ships
   with is browsable too, with copy-URL everywhere.
@@ -79,10 +79,12 @@ the built-in default, and the dashboard explains what's missing.
 1. **Photography** — ✅ done: the full image library from the old site now lives in `static/images/photos/` and
    `VITE_IMG_BASE=/images/photos` is set in `.env` — remember to set the same variable in Vercel so the deployed site
    self-hosts too. (`scripts/fetch-assets.sh` remains only as a fallback.)
-2. **Contact form** — set `FORM_WEBHOOK_URL` (and optionally `FORM_WEBHOOK_SECRET`) in Vercel → Settings → Environment Variables.
-   Any JSON webhook works; an n8n *Webhook* node → *Send Email* is the simplest. The form posts:
-   `{ source, submittedAt, ip, userAgent, name, email, phone, postcode, service, message }` with header `x-jewel-secret`.
-   Until it's set, the form shows an "email us instead" fallback with a pre-filled mailto.
+2. **Contact form email** — enquiries are emailed via [Resend](https://resend.com) (the `jewelps.co.uk` domain is
+   verified there). Set `RESEND_API_KEY` in Vercel → Settings → Environment Variables; optionally `CONTACT_TO_EMAIL`
+   (default `enquiries@jewelps.co.uk`) and `CONTACT_FROM_EMAIL` (default `website@jewelps.co.uk` — must be on the
+   verified domain). Emails have Reply-To set to the enquirer, so replying answers them directly. The old
+   `FORM_WEBHOOK_URL` (n8n) path still works as an optional extra. With nothing configured, the form shows an
+   "email us instead" fallback with a pre-filled mailto.
 3. **Geom Graphic** — the licensed body font isn't in the repo; Outfit is the stand-in. Drop the `.woff2` files into `static/fonts/` and uncomment the `GEOM` block at the top of `src/app.css`.
 4. **Terms & conditions** — `static/documents/terms-and-conditions.pdf` is a client-facing Terms of Business (v1.0, Aug 2026) written for the new site; the source is `scripts/terms-and-conditions.html` — edit it and re-export to PDF from a browser (Print → Save as PDF, A4, background graphics on). Have it checked before launch.
 5. **Domain** — point `jewelps.co.uk` at Vercel under Project → Settings → Domains.
