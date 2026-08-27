@@ -2,10 +2,9 @@
 // Copy follows the Jewel Enterprise Brand Guidelines 2026 (friendly, professional,
 // concise, no jargon). Brand colours & fonts live in tailwind.config.js / app.css.
 
-// Photography is currently served from the live jewelps.co.uk site.
-// To self-host: run `bash scripts/fetch-assets.sh` (or the .bat) and set
-// VITE_IMG_BASE=/images/photos in .env — see README.
-export const IMG_BASE = import.meta.env.VITE_IMG_BASE || 'https://www.jewelps.co.uk/images';
+// Photography is self-hosted in static/images/photos/ (committed to the
+// repo). VITE_IMG_BASE can override the base path but is no longer required.
+export const IMG_BASE = import.meta.env.VITE_IMG_BASE || '/images/photos';
 
 /** @param {string} name */
 export const img = (name) => `${IMG_BASE}/${name}`;
