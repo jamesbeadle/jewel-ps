@@ -56,8 +56,10 @@ export function credentialsConfigured() {
 }
 
 /**
- * Constant-time string comparison so response timing doesn't leak how many
- * leading characters of the password were right.
+ * Constant-time string comparison. A plain `===` stops at the first
+ * differing character, so response times leak how much of a guess was
+ * right; this always examines every byte. Callers compare fixed-length
+ * digests, so the length check leaks nothing useful either.
  * @param {string} a
  * @param {string} b
  */
@@ -65,20 +67,31 @@ function safeEqual(a, b) {
 	const x = enc.encode(a);
 	const y = enc.encode(b);
 	let diff = x.length ^ y.length;
-	for (let i = 0; i < Math.max(x.length, y.length); i++) {
-		diff |= (x[i] ?? 0) ^ (y[i] ?? 0);
-	}
+	const n = Math.max(x.length, y.length);
+	for (let i = 0; i < n; i++) diff |= (x[i] ?? 0) ^ (y[i] ?? 0);
 	return diff === 0;
 }
 
 /**
+ * Compares a login attempt against the configured credentials without
+ * leaking anything through timing: both values are hashed to a fixed
+ * length first, then compared byte-for-byte, and the username and
+ * password are always both checked (no early return on a bad username).
  * @param {string} username
  * @param {string} password
+ * @returns {Promise<boolean>}
  */
-export function checkCredentials(username, password) {
+export async function checkCredentials(username, password) {
 	if (!credentialsConfigured()) return false;
-	const userOk = safeEqual(username.trim(), envTrim(env.ADMIN_USERNAME));
-	const passOk = safeEqual(password, envTrim(env.ADMIN_PASSWORD));
+	const key = secret();
+	const [givenUser, wantUser, givenPass, wantPass] = await Promise.all([
+		hmac(username.trim(), key),
+		hmac(envTrim(env.ADMIN_USERNAME), key),
+		hmac(password, key),
+		hmac(envTrim(env.ADMIN_PASSWORD), key)
+	]);
+	const userOk = safeEqual(givenUser, wantUser);
+	const passOk = safeEqual(givenPass, wantPass);
 	return userOk && passOk;
 }
 
@@ -92,7 +105,7 @@ export async function verifySessionToken(token) {
 	if (!token || !secret()) return false;
 	const [payload, sig] = token.split('.');
 	if (!payload || !sig) return false;
-	if (Number(payload) < Date.now()) return false;
+	if (!/^\d+$/.test(payload) || Number(payload) < Date.now()) return false;
 	return safeEqual(await hmac(payload, secret()), sig);
 }
 
@@ -117,8 +130,8 @@ export async function verifyPrintToken(brochureId, token) {
 	if (!token || !secret()) return false;
 	const [expires, sig] = token.split('.');
 	if (!expires || !sig) return false;
-	if (Number(expires) < Date.now()) return false;
-	return (await hmac(`print.${brochureId}.${expires}`, secret())) === sig;
+	if (!/^\d+$/.test(expires) || Number(expires) < Date.now()) return false;
+	return safeEqual(await hmac(`print.${brochureId}.${expires}`, secret()), sig);
 }
 
 /**

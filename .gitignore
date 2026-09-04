@@ -3,14 +3,12 @@ node_modules
 /build
 /.vercel
 .DS_Store
+# Real env files stay out of git; the example (no secrets) is tracked.
 .env
 .env.*
 !.env.example
 vite.config.ts.timestamp-*
 .vercel
-
-.vercel
-.env*
 
 # migration helpers (not part of the site)
 _to_delete/

@@ -148,6 +148,21 @@ export async function dbDelete(table, id) {
 	await check(res, `delete ${table}`);
 }
 
+/**
+ * Delete every row matching a PostgREST filter query (e.g. `status=eq.archived`).
+ * The filter is mandatory — an empty one would delete the whole table.
+ * @param {string} table
+ * @param {string} query
+ */
+export async function dbDeleteWhere(table, query) {
+	if (!query.trim()) throw new Error(`dbDeleteWhere(${table}): refusing to delete without a filter`);
+	const res = await fetch(restUrl(`${table}?${query}`), {
+		method: 'DELETE',
+		headers: headers()
+	});
+	await check(res, `delete ${table}`);
+}
+
 /* ---- Supabase Storage (public 'media' bucket) ------------------------- */
 
 /**

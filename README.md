@@ -53,7 +53,7 @@ structure and look as the jewelbb.co.uk admin:
 - **RTW checks** — every Right to Work check completed at `/rtw` (Jeremy's guided check tool, entity `JPS`) is logged
   to a register viewable here; the tool's copy-row and print outputs are unchanged.
 - **Login** — one shared username/password from env vars, held in a signed `httpOnly` cookie for 8 hours. No accounts
-  table, no third-party auth.
+  table, no third-party auth. Rate-limited against brute force (see *Security* below).
 - **Supabase** — talked to over plain `fetch` with the service-role key (no SDK). Tables have RLS enabled with no
   policies, so nothing is reachable with the public anon key.
 
@@ -62,9 +62,12 @@ the built-in default, and the dashboard explains what's missing.
 
 **Setup (once):**
 
-1. In the Jewel PS Supabase project's **SQL Editor**, run `supabase/schema.sql` (enquiries) and
-   `supabase/2026-08-26-admin.sql` (media bucket, brochures, RTW register). *Both have already been applied to the
-   live `jewel-ps` project.*
+1. In the Jewel PS Supabase project's **SQL Editor**, run `supabase/schema.sql` (enquiries + login-attempt log),
+   `supabase/2026-08-26-admin.sql` (media bucket, brochures, RTW register) and
+   `supabase/2026-09-04-security-hardening.sql` (locks the public API roles out, adds the login-attempt log to an
+   existing database). *The first two have already been applied to the live `jewel-ps` project; run the hardening
+   script there once — it's safe on live data.* (Existing database? Don't re-run `schema.sql` — see *Database
+   migrations* below.)
 2. **Project Settings → API**: copy the **Project URL** and **service_role** key into `SUPABASE_URL` /
    `SUPABASE_SERVICE_ROLE_KEY` (locally in `.env`, and on Vercel). The service-role key bypasses RLS — server only,
    never commit it.
@@ -73,6 +76,40 @@ the built-in default, and the dashboard explains what's missing.
 
 **PDF generation** — on Vercel nothing to configure (`@sparticuz/chromium` is bundled; the routes set
 `maxDuration: 60`). Locally it uses an installed Chrome/Chromium automatically, or set `PDF_CHROME_PATH`.
+
+### Database migrations
+
+`schema.sql` is for a **fresh** database. On the live database, apply changes with the dated, standalone files in
+`supabase/` instead — each is additive, idempotent and safe to re-run:
+
+| File | Adds |
+| --- | --- |
+| `2026-08-26-admin.sql` | `media` storage bucket, `brochures` + `brochure_pages` (brochure builder), `rtw_submissions` (RTW register) |
+| `2026-09-04-security-hardening.sql` | RLS on every table, public API roles revoked, `admin_login_attempts` table (see *Security*) |
+
+## Security
+
+**Database.** Every table has row-level security enabled with **no policies**. The site's server code authenticates
+with the `service_role` key, which bypasses RLS; the public `anon`/`authenticated` keys are never used and see nothing.
+As a second layer, `2026-09-04-security-hardening.sql` also revokes the table privileges Supabase grants those public
+roles by default (and stops future tables getting them), so even if RLS were switched off by mistake the public keys
+still couldn't read or write anything. The script ends with a report — every table should show `rls_enabled = true`,
+`policies = 0`, `anon_access = false`, `service_role_access = true`. If a table is ever meant to be read with the anon
+key, it needs both a policy *and* an explicit `grant select on public.<table> to anon`. The public `media` storage
+bucket is unaffected — uploaded photos keep serving as before.
+
+**Admin area (`/admin`).** Guarded in `src/hooks.server.js` for every request whose path starts with `/admin` (except
+the login page): the `jps_admin` cookie must carry a valid, unexpired HMAC-SHA256 signature. The cookie is `HttpOnly`,
+`Secure`, `SameSite=Lax` and lasts 8 hours; SvelteKit's built-in origin check protects the login/logout forms from
+CSRF. Credentials and signatures are compared in constant time. The login is rate-limited — after **5 failed attempts
+from one IP within 15 minutes** further attempts are refused until the window passes (attempts are logged in
+`admin_login_attempts`, so the limit survives redeploys; a wrong password also costs a one-second delay). Every
+`/admin` response is sent with `Cache-Control: no-store`, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`,
+`Referrer-Policy: same-origin` and `X-Robots-Tag: noindex`. Failed and refused logins appear in the Vercel function
+logs as `Admin login failed for <ip>` / `Admin login refused for <ip>`.
+
+To sign every admin out at once (e.g. after a shared laptop goes missing), change `ADMIN_SESSION_SECRET` in Vercel and
+redeploy.
 
 ## Launch checklist
 
