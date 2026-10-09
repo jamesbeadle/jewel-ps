@@ -1,0 +1,2472 @@
+{
+  "generatedAt": "2026-10-09T13:48:11+00:00",
+  "kitVersion": "1.14.0",
+  "score": {
+    "overall": 65.7,
+    "groups": [
+      {
+        "group": "Standard baseline checks",
+        "score": 56.7,
+        "weight": 60
+      },
+      {
+        "group": "Design pattern file count",
+        "score": 100.0,
+        "weight": 10
+      },
+      {
+        "group": "Prose",
+        "score": 75.5,
+        "weight": 20
+      },
+      {
+        "group": "Widget adoption",
+        "score": null,
+        "weight": 0
+      },
+      {
+        "group": "Input validation",
+        "score": null,
+        "weight": 0
+      }
+    ],
+    "elements": [
+      {
+        "key": "filesOverLimit",
+        "label": "Files over the line limit",
+        "group": "Standard baseline checks",
+        "weight": 10,
+        "zeroAt": 0.5,
+        "unit": "files",
+        "isMeasured": true,
+        "offenders": 29,
+        "measuredAgainst": 75,
+        "score": 22.7
+      },
+      {
+        "key": "worstFile",
+        "label": "Worst file, in limits over",
+        "group": "Standard baseline checks",
+        "weight": 5,
+        "zeroAt": 9,
+        "unit": "",
+        "isMeasured": true,
+        "offenders": 9.28,
+        "measuredAgainst": 1,
+        "score": 0.0
+      },
+      {
+        "key": "functionsOverLimit",
+        "label": "Functions over the line limit",
+        "group": "Standard baseline checks",
+        "weight": 8,
+        "zeroAt": 0.25,
+        "unit": "functions",
+        "isMeasured": true,
+        "offenders": 6,
+        "measuredAgainst": 131,
+        "score": 81.7
+      },
+      {
+        "key": "elseBlocks",
+        "label": "Else blocks",
+        "group": "Standard baseline checks",
+        "weight": 5,
+        "zeroAt": 0.5,
+        "unit": "branches",
+        "isMeasured": true,
+        "offenders": 8,
+        "measuredAgainst": 269,
+        "score": 94.1
+      },
+      {
+        "key": "duplication",
+        "label": "Duplication %",
+        "group": "Standard baseline checks",
+        "weight": 8,
+        "zeroAt": 20,
+        "unit": "",
+        "isMeasured": true,
+        "offenders": 0.94,
+        "measuredAgainst": 1,
+        "score": 95.3
+      },
+      {
+        "key": "comments",
+        "label": "Explanatory comment lines",
+        "group": "Standard baseline checks",
+        "weight": 4,
+        "zeroAt": 50,
+        "unit": "thousand lines",
+        "isMeasured": true,
+        "offenders": 106,
+        "measuredAgainst": 10.29,
+        "score": 79.4
+      },
+      {
+        "key": "magicValues",
+        "label": "Inline magic values",
+        "group": "Standard baseline checks",
+        "weight": 4,
+        "zeroAt": 20,
+        "unit": "thousand lines",
+        "isMeasured": true,
+        "offenders": 131,
+        "measuredAgainst": 10.29,
+        "score": 36.3
+      },
+      {
+        "key": "orphans",
+        "label": "Orphan components and functions",
+        "group": "Standard baseline checks",
+        "weight": 4,
+        "zeroAt": 0.1,
+        "unit": "components and functions",
+        "isMeasured": true,
+        "offenders": 11,
+        "measuredAgainst": 152,
+        "score": 27.6
+      },
+      {
+        "key": "memberChains",
+        "label": "Long member chain lines",
+        "group": "Standard baseline checks",
+        "weight": 4,
+        "zeroAt": 30,
+        "unit": "thousand lines",
+        "isMeasured": true,
+        "offenders": 67,
+        "measuredAgainst": 10.29,
+        "score": 78.3
+      },
+      {
+        "key": "deepIndentation",
+        "label": "Deeply indented lines",
+        "group": "Standard baseline checks",
+        "weight": 4,
+        "zeroAt": 30,
+        "unit": "thousand lines",
+        "isMeasured": true,
+        "offenders": 522,
+        "measuredAgainst": 10.29,
+        "score": 0.0
+      },
+      {
+        "key": "functionNames",
+        "label": "Overlong function names",
+        "group": "Standard baseline checks",
+        "weight": 4,
+        "zeroAt": 0.1,
+        "unit": "functions",
+        "isMeasured": true,
+        "offenders": 0,
+        "measuredAgainst": 131,
+        "score": 100.0
+      },
+      {
+        "key": "predictedFiles",
+        "label": "Files the patterns predict but are missing",
+        "group": "Design pattern file count",
+        "weight": 10,
+        "zeroAt": 0.5,
+        "unit": "predicted files",
+        "isMeasured": true,
+        "offenders": 0,
+        "measuredAgainst": 11,
+        "score": 100.0
+      },
+      {
+        "key": "entityFileCounts",
+        "label": "Entities outside their expected file count",
+        "group": "Design pattern file count",
+        "weight": 10,
+        "zeroAt": 0.5,
+        "unit": "entities",
+        "isMeasured": false,
+        "offenders": 0,
+        "score": null
+      },
+      {
+        "key": "tangledConditions",
+        "label": "Conditions with calls tangled inside calls",
+        "group": "Prose",
+        "weight": 8,
+        "zeroAt": 0.25,
+        "unit": "branches",
+        "isMeasured": true,
+        "offenders": 15,
+        "measuredAgainst": 269,
+        "score": 77.7
+      },
+      {
+        "key": "literalComparisons",
+        "label": "Conditions compared to a raw literal",
+        "group": "Prose",
+        "weight": 6,
+        "zeroAt": 0.25,
+        "unit": "branches",
+        "isMeasured": true,
+        "offenders": 35,
+        "measuredAgainst": 269,
+        "score": 48.0
+      },
+      {
+        "key": "gluedAccessors",
+        "label": "Accessor names that want to be a property",
+        "group": "Prose",
+        "weight": 6,
+        "zeroAt": 0.1,
+        "unit": "functions",
+        "isMeasured": true,
+        "offenders": 0,
+        "measuredAgainst": 131,
+        "score": 100.0
+      },
+      {
+        "key": "handRolledWidgets",
+        "label": "Markup written by hand where a widget should be",
+        "group": "Widget adoption",
+        "weight": 8,
+        "zeroAt": 0.5,
+        "unit": "widget slots",
+        "isMeasured": false,
+        "offenders": null,
+        "score": null
+      },
+      {
+        "key": "unvalidatedWrites",
+        "label": "Doors that write without checking their input against the columns",
+        "group": "Input validation",
+        "weight": 8,
+        "zeroAt": 0.5,
+        "unit": "write doors",
+        "isMeasured": false,
+        "offenders": 0,
+        "score": null
+      }
+    ]
+  },
+  "summaries": {
+    "fileLength": {
+      "limit": 100,
+      "filesOverLimit": 29,
+      "totalFiles": 75,
+      "totalLines": 10290,
+      "worstFileLines": 1028,
+      "worstFileTimesOverLimit": 9.28
+    },
+    "functionShape": {
+      "limit": 30,
+      "functionsOverLimit": 6,
+      "totalFunctions": 131,
+      "elseBlocks": 8,
+      "ifBlocks": 269,
+      "measurementIsHeuristic": true
+    },
+    "functionNames": {
+      "overlongFunctionNames": 0,
+      "maxWords": 5,
+      "maxLength": 40
+    },
+    "accessorNames": {
+      "gluedAccessorNames": 0,
+      "measurementIsHeuristic": true
+    },
+    "duplication": {
+      "clones": 9,
+      "duplicatedLines": 145,
+      "totalLines": 15451,
+      "duplicatedPercentage": 0.94
+    },
+    "naming": {
+      "bannedAbbreviationHits": 143,
+      "unprefixedBooleans": 21
+    },
+    "comments": {
+      "explanatoryCommentLines": 106,
+      "filesWithComments": 26,
+      "taskMarkers": 0
+    },
+    "magicValues": {
+      "inlineHexColours": 95,
+      "inlineStyleAttributes": 6,
+      "repeatedStringLiterals": 30
+    },
+    "prose": {
+      "longMemberChainLines": 67,
+      "deeplyIndentedLines": 522,
+      "overlongLines": 122,
+      "measurementIsHeuristic": true
+    },
+    "conditions": {
+      "tangledConditionLines": 15,
+      "literalComparisonLines": 35,
+      "measurementIsHeuristic": true
+    },
+    "orphans": {
+      "orphanFunctions": 0,
+      "functionsExamined": 131
+    },
+    "designPatterns": {
+      "roleFamilies": 3,
+      "predictedFiles": 11,
+      "predictedFilesMissing": 0,
+      "entities": 0,
+      "entitiesOutOfRange": 0,
+      "measurementIsHeuristic": true
+    },
+    "inventory": {
+      "pages": 18,
+      "components": 21,
+      "orphanComponents": 11,
+      "averagePageLines": 289
+    },
+    "siteDefinition": {
+      "skipped": "no siteDefinition catalogue in rules.json"
+    },
+    "inputValidation": {
+      "schemaTables": 2,
+      "limitedColumns": 0,
+      "writeDoors": 0,
+      "unvalidatedDoors": 0,
+      "looserLimits": 0
+    },
+    "fileAreas": {
+      "totalFiles": 178,
+      "frontend": 127,
+      "backend": 20,
+      "infrastructure": 10,
+      "api": 7,
+      "shared": 5,
+      "tooling": 3,
+      "database": 3,
+      "other": 2,
+      "docs": 1
+    }
+  },
+  "details": {
+    "fileLength": {
+      "name": "fileLength",
+      "summary": {
+        "limit": 100,
+        "filesOverLimit": 29,
+        "totalFiles": 75,
+        "totalLines": 10290,
+        "worstFileLines": 1028,
+        "worstFileTimesOverLimit": 9.28
+      },
+      "offenders": [
+        {
+          "file": "src/routes/rtw/+page.svelte",
+          "lines": 1028
+        },
+        {
+          "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+          "lines": 708
+        },
+        {
+          "file": "src/routes/admin/enquiries/+page.svelte",
+          "lines": 543
+        },
+        {
+          "file": "src/routes/admin/+page.svelte",
+          "lines": 470
+        },
+        {
+          "file": "src/routes/admin/brochure/[id]/+page.svelte",
+          "lines": 379
+        },
+        {
+          "file": "src/lib/server/brochures.js",
+          "lines": 316
+        },
+        {
+          "file": "src/routes/admin/brochure/+page.svelte",
+          "lines": 312
+        },
+        {
+          "file": "src/routes/admin/media/+page.svelte",
+          "lines": 301
+        },
+        {
+          "file": "src/lib/site.js",
+          "lines": 292
+        },
+        {
+          "file": "src/routes/+page.svelte",
+          "lines": 283
+        },
+        {
+          "file": "src/lib/brochure/templates.js",
+          "lines": 282
+        },
+        {
+          "file": "src/routes/admin/rtw/+page.svelte",
+          "lines": 253
+        },
+        {
+          "file": "src/lib/components/admin/ImagePicker.svelte",
+          "lines": 241
+        },
+        {
+          "file": "src/lib/server/db.js",
+          "lines": 230
+        },
+        {
+          "file": "src/routes/+layout.svelte",
+          "lines": 222
+        },
+        {
+          "file": "src/routes/admin/+layout.svelte",
+          "lines": 207
+        },
+        {
+          "file": "src/routes/contact/+page.svelte",
+          "lines": 188
+        },
+        {
+          "file": "src/lib/brochure/defaults.js",
+          "lines": 186
+        },
+        {
+          "file": "src/routes/admin/login/+page.svelte",
+          "lines": 179
+        },
+        {
+          "file": "src/lib/motion.js",
+          "lines": 168
+        },
+        {
+          "file": "src/lib/components/brochure/PageProjectDetail.svelte",
+          "lines": 155
+        },
+        {
+          "file": "src/lib/server/auth.js",
+          "lines": 154
+        },
+        {
+          "file": "src/routes/about/+page.svelte",
+          "lines": 142
+        },
+        {
+          "file": "src/lib/components/brochure/PageBackCover.svelte",
+          "lines": 140
+        },
+        {
+          "file": "src/lib/components/brochure/PageTeam.svelte",
+          "lines": 127
+        },
+        {
+          "file": "src/lib/server/email.js",
+          "lines": 116
+        },
+        {
+          "file": "src/lib/server/login-attempts.js",
+          "lines": 113
+        },
+        {
+          "file": "src/routes/fire-flood-restoration/+page.svelte",
+          "lines": 109
+        },
+        {
+          "file": "src/routes/contact/+page.server.js",
+          "lines": 107
+        }
+      ]
+    },
+    "functionShape": {
+      "name": "functionShape",
+      "summary": {
+        "limit": 30,
+        "functionsOverLimit": 6,
+        "totalFunctions": 131,
+        "elseBlocks": 8,
+        "ifBlocks": 269,
+        "measurementIsHeuristic": true
+      },
+      "offenders": [
+        {
+          "file": "src/lib/brochure/defaults.js",
+          "lines": 168,
+          "name": "defaultBrochurePages",
+          "line": 19
+        },
+        {
+          "file": "src/lib/server/email.js",
+          "lines": 79,
+          "name": "sendEnquiryEmail",
+          "line": 38
+        },
+        {
+          "file": "src/routes/admin/+page.server.js",
+          "lines": 62,
+          "name": "load",
+          "line": 5
+        },
+        {
+          "file": "src/routes/rtw/submit/+server.js",
+          "lines": 53,
+          "name": "POST",
+          "line": 31
+        },
+        {
+          "file": "src/routes/admin/enquiries/+page.server.js",
+          "lines": 44,
+          "name": "load",
+          "line": 7
+        },
+        {
+          "file": "src/routes/admin/rtw/+page.server.js",
+          "lines": 43,
+          "name": "load",
+          "line": 27
+        }
+      ]
+    },
+    "functionNames": {
+      "name": "functionNames",
+      "summary": {
+        "overlongFunctionNames": 0,
+        "maxWords": 5,
+        "maxLength": 40
+      },
+      "offenders": []
+    },
+    "accessorNames": {
+      "name": "accessorNames",
+      "summary": {
+        "gluedAccessorNames": 0,
+        "measurementIsHeuristic": true
+      },
+      "offenders": []
+    },
+    "naming": {
+      "name": "naming",
+      "summary": {
+        "bannedAbbreviationHits": 143,
+        "unprefixedBooleans": 21
+      },
+      "offenders": {
+        "abbreviations": [
+          {
+            "file": "src/lib/motion.js",
+            "line": 155
+          },
+          {
+            "file": "src/lib/motion.js",
+            "line": 164
+          },
+          {
+            "file": "src/lib/server/auth.js",
+            "line": 19
+          },
+          {
+            "file": "src/lib/server/auth.js",
+            "line": 21
+          },
+          {
+            "file": "src/lib/server/brochures.js",
+            "line": 280
+          },
+          {
+            "file": "src/lib/server/brochures.js",
+            "line": 281
+          },
+          {
+            "file": "src/lib/server/brochures.js",
+            "line": 282
+          },
+          {
+            "file": "src/lib/server/brochures.js",
+            "line": 285
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 54
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 57
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 58
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 59
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 60
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 62
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 72
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 73
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 74
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 84
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 88
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 89
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 100
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 105
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 106
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 116
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 121
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 131
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 136
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 144
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 148
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 159
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 163
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 180
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 185
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 186
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 201
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 210
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 211
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 225
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 229
+          },
+          {
+            "file": "src/lib/server/email.js",
+            "line": 96
+          },
+          {
+            "file": "src/lib/server/email.js",
+            "line": 112
+          },
+          {
+            "file": "src/lib/server/email.js",
+            "line": 113
+          },
+          {
+            "file": "src/lib/server/email.js",
+            "line": 114
+          },
+          {
+            "file": "src/lib/server/pdf.js",
+            "line": 21
+          },
+          {
+            "file": "src/lib/server/pdf.js",
+            "line": 22
+          },
+          {
+            "file": "src/lib/server/pdf.js",
+            "line": 23
+          },
+          {
+            "file": "src/routes/contact/+page.server.js",
+            "line": 56
+          },
+          {
+            "file": "src/routes/contact/+page.server.js",
+            "line": 57
+          },
+          {
+            "file": "src/routes/contact/+page.server.js",
+            "line": 66
+          },
+          {
+            "file": "src/routes/contact/+page.server.js",
+            "line": 67
+          }
+        ],
+        "booleans": [
+          {
+            "file": "src/routes/admin/+layout.js",
+            "line": 3,
+            "name": "prerender"
+          },
+          {
+            "file": "src/routes/admin/+layout.js",
+            "line": 4,
+            "name": "ssr"
+          },
+          {
+            "file": "src/routes/admin/api/media/+server.js",
+            "line": 15,
+            "name": "prerender"
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/pdf/+server.js",
+            "line": 11,
+            "name": "prerender"
+          },
+          {
+            "file": "src/routes/admin/logout/+server.js",
+            "line": 4,
+            "name": "prerender"
+          },
+          {
+            "file": "src/routes/brochure/+page.server.js",
+            "line": 3,
+            "name": "prerender"
+          },
+          {
+            "file": "src/routes/brochure/pdf/+server.js",
+            "line": 8,
+            "name": "prerender"
+          },
+          {
+            "file": "src/routes/brochure/print/[id]/+page.server.js",
+            "line": 15,
+            "name": "prerender"
+          },
+          {
+            "file": "src/routes/contact/+page.server.js",
+            "line": 48,
+            "name": "stored"
+          },
+          {
+            "file": "src/routes/contact/+page.server.js",
+            "line": 49,
+            "name": "delivered"
+          },
+          {
+            "file": "src/routes/robots.txt/+server.js",
+            "line": 3,
+            "name": "prerender"
+          },
+          {
+            "file": "src/routes/rtw/submit/+server.js",
+            "line": 10,
+            "name": "prerender"
+          },
+          {
+            "file": "src/routes/sitemap.xml/+server.js",
+            "line": 3,
+            "name": "prerender"
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 20,
+            "name": "uploading"
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 9,
+            "name": "menuOpen"
+          },
+          {
+            "file": "src/routes/admin/brochure/+page.svelte",
+            "line": 5,
+            "name": "showCreate"
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 18,
+            "name": "pickerOpen"
+          },
+          {
+            "file": "src/routes/admin/login/+page.svelte",
+            "line": 6,
+            "name": "submitting"
+          },
+          {
+            "file": "src/routes/admin/media/+page.svelte",
+            "line": 7,
+            "name": "uploading"
+          },
+          {
+            "file": "src/routes/contact/+page.svelte",
+            "line": 12,
+            "name": "submitting"
+          },
+          {
+            "file": "src/routes/rtw/+page.svelte",
+            "line": 354,
+            "name": "done"
+          }
+        ]
+      }
+    },
+    "comments": {
+      "name": "comments",
+      "summary": {
+        "explanatoryCommentLines": 106,
+        "filesWithComments": 26,
+        "taskMarkers": 0
+      },
+      "offenders": []
+    },
+    "magicValues": {
+      "name": "magicValues",
+      "summary": {
+        "inlineHexColours": 95,
+        "inlineStyleAttributes": 6,
+        "repeatedStringLiterals": 30
+      },
+      "offenders": {
+        "hexColours": [
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 191
+          },
+          {
+            "file": "src/lib/components/brochure/PageBackCover.svelte",
+            "line": 92
+          },
+          {
+            "file": "src/lib/components/brochure/PageBackCover.svelte",
+            "line": 112
+          },
+          {
+            "file": "src/lib/components/brochure/PageBackCover.svelte",
+            "line": 122
+          },
+          {
+            "file": "src/lib/components/brochure/PageBackCover.svelte",
+            "line": 137
+          },
+          {
+            "file": "src/lib/components/brochure/PageCover.svelte",
+            "line": 66
+          },
+          {
+            "file": "src/lib/components/brochure/PageProjectDetail.svelte",
+            "line": 148
+          },
+          {
+            "file": "src/lib/components/brochure/PageProjectDetail.svelte",
+            "line": 149
+          },
+          {
+            "file": "src/routes/+page.svelte",
+            "line": 275
+          },
+          {
+            "file": "src/routes/+page.svelte",
+            "line": 276
+          },
+          {
+            "file": "src/routes/+page.svelte",
+            "line": 277
+          },
+          {
+            "file": "src/routes/admin/+layout.svelte",
+            "line": 62
+          },
+          {
+            "file": "src/routes/admin/+layout.svelte",
+            "line": 123
+          },
+          {
+            "file": "src/routes/admin/+layout.svelte",
+            "line": 148
+          },
+          {
+            "file": "src/routes/admin/+layout.svelte",
+            "line": 163
+          },
+          {
+            "file": "src/routes/admin/+page.svelte",
+            "line": 183
+          },
+          {
+            "file": "src/routes/admin/+page.svelte",
+            "line": 184
+          },
+          {
+            "file": "src/routes/admin/+page.svelte",
+            "line": 197
+          },
+          {
+            "file": "src/routes/admin/+page.svelte",
+            "line": 220
+          },
+          {
+            "file": "src/routes/admin/brochure/+page.svelte",
+            "line": 170
+          },
+          {
+            "file": "src/routes/admin/brochure/+page.svelte",
+            "line": 283
+          },
+          {
+            "file": "src/routes/admin/brochure/+page.svelte",
+            "line": 284
+          },
+          {
+            "file": "src/routes/admin/brochure/+page.svelte",
+            "line": 285
+          },
+          {
+            "file": "src/routes/admin/brochure/+page.svelte",
+            "line": 306
+          },
+          {
+            "file": "src/routes/admin/brochure/+page.svelte",
+            "line": 310
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/+page.svelte",
+            "line": 213
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/+page.svelte",
+            "line": 214
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/+page.svelte",
+            "line": 215
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/+page.svelte",
+            "line": 362
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/+page.svelte",
+            "line": 368
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/+page.svelte",
+            "line": 370
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/+page.svelte",
+            "line": 377
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 418
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 419
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 425
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 426
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 427
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 608
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 663
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 670
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 672
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 679
+          },
+          {
+            "file": "src/routes/admin/enquiries/+page.svelte",
+            "line": 289
+          },
+          {
+            "file": "src/routes/admin/enquiries/+page.svelte",
+            "line": 290
+          },
+          {
+            "file": "src/routes/admin/enquiries/+page.svelte",
+            "line": 302
+          },
+          {
+            "file": "src/routes/admin/enquiries/+page.svelte",
+            "line": 306
+          },
+          {
+            "file": "src/routes/admin/enquiries/+page.svelte",
+            "line": 307
+          },
+          {
+            "file": "src/routes/admin/enquiries/+page.svelte",
+            "line": 308
+          },
+          {
+            "file": "src/routes/admin/enquiries/+page.svelte",
+            "line": 504
+          },
+          {
+            "file": "src/routes/admin/enquiries/+page.svelte",
+            "line": 527
+          }
+        ],
+        "inlineStyles": [
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 129
+          },
+          {
+            "file": "src/routes/+page.svelte",
+            "line": 130
+          },
+          {
+            "file": "src/routes/+page.svelte",
+            "line": 207
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 356
+          },
+          {
+            "file": "src/routes/brochure/+page.svelte",
+            "line": 35
+          },
+          {
+            "file": "src/routes/rtw/+page.svelte",
+            "line": 571
+          }
+        ],
+        "repeatedLiterals": [
+          {
+            "literal": "kicker",
+            "occurrences": 27
+          },
+          {
+            "literal": "h-section mt-5 text-white",
+            "occurrences": 23
+          },
+          {
+            "literal": "hidden",
+            "occurrences": 21
+          },
+          {
+            "literal": "noopener",
+            "occurrences": 19
+          },
+          {
+            "literal": "submit",
+            "occurrences": 18
+          },
+          {
+            "literal": "btn btn--outline btn--sm",
+            "occurrences": 18
+          },
+          {
+            "literal": "button",
+            "occurrences": 16
+          },
+          {
+            "literal": "container-site",
+            "occurrences": 15
+          },
+          {
+            "literal": "max-w-2xl",
+            "occurrences": 8
+          },
+          {
+            "literal": "b-kicker",
+            "occurrences": 8
+          },
+          {
+            "literal": "linkish linkish--danger",
+            "occurrences": 7
+          },
+          {
+            "literal": "text-white",
+            "occurrences": 7
+          },
+          {
+            "literal": "b-rule",
+            "occurrences": 6
+          },
+          {
+            "literal": "linkish",
+            "occurrences": 6
+          },
+          {
+            "literal": "rail-step",
+            "occurrences": 6
+          },
+          {
+            "literal": "stepnum",
+            "occurrences": 6
+          },
+          {
+            "literal": "radio-opt",
+            "occurrences": 6
+          },
+          {
+            "literal": "btn-gold",
+            "occurrences": 5
+          },
+          {
+            "literal": "b-title",
+            "occurrences": 5
+          },
+          {
+            "literal": "bg-grid absolute inset-0 -z-10",
+            "occurrences": 4
+          },
+          {
+            "literal": "mt-7 text-lg leading-relaxed text-grey",
+            "occurrences": 4
+          },
+          {
+            "literal": "mt-4 leading-relaxed text-grey",
+            "occurrences": 4
+          },
+          {
+            "literal": "mt-6 text-lg text-grey",
+            "occurrences": 4
+          },
+          {
+            "literal": "warn__detail",
+            "occurrences": 4
+          },
+          {
+            "literal": "btn btn--outline",
+            "occurrences": 4
+          },
+          {
+            "literal": "btn btn--primary",
+            "occurrences": 4
+          },
+          {
+            "literal": "page_id",
+            "occurrences": 4
+          },
+          {
+            "literal": "nowrap",
+            "occurrences": 4
+          },
+          {
+            "literal": "mt-1 block text-xs text-red-400",
+            "occurrences": 4
+          },
+          {
+            "literal": "radio-group",
+            "occurrences": 4
+          }
+        ]
+      }
+    },
+    "prose": {
+      "name": "prose",
+      "summary": {
+        "longMemberChainLines": 67,
+        "deeplyIndentedLines": 522,
+        "overlongLines": 122,
+        "measurementIsHeuristic": true
+      },
+      "offenders": {
+        "memberChains": [
+          {
+            "file": "src/hooks.client.js",
+            "line": 10
+          },
+          {
+            "file": "src/hooks.server.js",
+            "line": 41
+          },
+          {
+            "file": "src/lib/brochure/defaults.js",
+            "line": 16
+          },
+          {
+            "file": "src/lib/brochure/defaults.js",
+            "line": 177
+          },
+          {
+            "file": "src/lib/brochure/templates.js",
+            "line": 49
+          },
+          {
+            "file": "src/lib/data/photos.js",
+            "line": 65
+          },
+          {
+            "file": "src/lib/motion.js",
+            "line": 36
+          },
+          {
+            "file": "src/lib/motion.js",
+            "line": 49
+          },
+          {
+            "file": "src/lib/server/brochures.js",
+            "line": 160
+          },
+          {
+            "file": "src/lib/server/brochures.js",
+            "line": 282
+          },
+          {
+            "file": "src/lib/server/email.js",
+            "line": 39
+          },
+          {
+            "file": "src/lib/server/email.js",
+            "line": 41
+          },
+          {
+            "file": "src/lib/server/email.js",
+            "line": 82
+          },
+          {
+            "file": "src/lib/server/pdf.js",
+            "line": 71
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 27
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 280
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.server.js",
+            "line": 28
+          },
+          {
+            "file": "src/routes/brochure/pdf/+server.js",
+            "line": 16
+          },
+          {
+            "file": "src/routes/brochure/pdf/+server.js",
+            "line": 17
+          },
+          {
+            "file": "src/routes/brochure/print/[id]/+page.server.js",
+            "line": 26
+          },
+          {
+            "file": "src/routes/contact/+page.server.js",
+            "line": 36
+          },
+          {
+            "file": "src/routes/contact/+page.server.js",
+            "line": 39
+          },
+          {
+            "file": "src/routes/contact/+page.server.js",
+            "line": 81
+          },
+          {
+            "file": "src/lib/components/Seo.svelte",
+            "line": 9
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 83
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 114
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 15
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 19
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 21
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 24
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 30
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 85
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 125
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 191
+          },
+          {
+            "file": "src/routes/admin/+layout.svelte",
+            "line": 7
+          },
+          {
+            "file": "src/routes/admin/+layout.svelte",
+            "line": 18
+          },
+          {
+            "file": "src/routes/admin/+page.svelte",
+            "line": 120
+          },
+          {
+            "file": "src/routes/admin/brochure/+page.svelte",
+            "line": 80
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/+page.svelte",
+            "line": 8
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/+page.svelte",
+            "line": 9
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 12
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 13
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 137
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 140
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 142
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 144
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 156
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 157
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 177
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 201
+          }
+        ],
+        "deepIndentation": [
+          {
+            "file": "src/lib/components/Testimonials.svelte",
+            "line": 34
+          },
+          {
+            "file": "src/lib/components/Testimonials.svelte",
+            "line": 35
+          },
+          {
+            "file": "src/lib/components/Testimonials.svelte",
+            "line": 36
+          },
+          {
+            "file": "src/lib/components/Testimonials.svelte",
+            "line": 40
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 75
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 76
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 77
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 78
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 79
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 80
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 81
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 82
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 83
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 84
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 85
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 105
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 106
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 107
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 108
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 109
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 115
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 116
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 117
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 118
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 119
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 120
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 121
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 122
+          },
+          {
+            "file": "src/lib/components/brochure/PageProjectDetail.svelte",
+            "line": 37
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 167
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 168
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 169
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 170
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 171
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 177
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 178
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 179
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 180
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 181
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 182
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 188
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 189
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 190
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 191
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 192
+          },
+          {
+            "file": "src/routes/+layout.svelte",
+            "line": 193
+          },
+          {
+            "file": "src/routes/+page.svelte",
+            "line": 57
+          },
+          {
+            "file": "src/routes/+page.svelte",
+            "line": 58
+          },
+          {
+            "file": "src/routes/+page.svelte",
+            "line": 59
+          },
+          {
+            "file": "src/routes/+page.svelte",
+            "line": 60
+          }
+        ],
+        "overlongLines": [
+          {
+            "file": "src/lib/brochure/defaults.js",
+            "line": 36
+          },
+          {
+            "file": "src/lib/brochure/defaults.js",
+            "line": 37
+          },
+          {
+            "file": "src/lib/brochure/defaults.js",
+            "line": 51
+          },
+          {
+            "file": "src/lib/brochure/defaults.js",
+            "line": 55
+          },
+          {
+            "file": "src/lib/brochure/defaults.js",
+            "line": 59
+          },
+          {
+            "file": "src/lib/brochure/defaults.js",
+            "line": 63
+          },
+          {
+            "file": "src/lib/brochure/defaults.js",
+            "line": 67
+          },
+          {
+            "file": "src/lib/brochure/defaults.js",
+            "line": 71
+          },
+          {
+            "file": "src/lib/brochure/defaults.js",
+            "line": 107
+          },
+          {
+            "file": "src/lib/brochure/defaults.js",
+            "line": 109
+          },
+          {
+            "file": "src/lib/brochure/defaults.js",
+            "line": 143
+          },
+          {
+            "file": "src/lib/brochure/defaults.js",
+            "line": 165
+          },
+          {
+            "file": "src/lib/brochure/defaults.js",
+            "line": 166
+          },
+          {
+            "file": "src/lib/server/email.js",
+            "line": 63
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 18
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 153
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 159
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 165
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 171
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 179
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 180
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 182
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 189
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 196
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 204
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 209
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 214
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 219
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 224
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 229
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 230
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 231
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 232
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 233
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 234
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 235
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 237
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 238
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 239
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 240
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 241
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 243
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 244
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 245
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 249
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 250
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 252
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 253
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 260
+          },
+          {
+            "file": "src/lib/site.js",
+            "line": 280
+          }
+        ]
+      }
+    },
+    "conditions": {
+      "name": "conditions",
+      "summary": {
+        "tangledConditionLines": 15,
+        "literalComparisonLines": 35,
+        "measurementIsHeuristic": true
+      },
+      "offenders": {
+        "tangled": [
+          {
+            "file": "src/hooks.server.js",
+            "line": 41
+          },
+          {
+            "file": "src/lib/motion.js",
+            "line": 15
+          },
+          {
+            "file": "src/lib/motion.js",
+            "line": 164
+          },
+          {
+            "file": "src/lib/server/db.js",
+            "line": 158
+          },
+          {
+            "file": "src/routes/admin/login/+page.server.js",
+            "line": 20
+          },
+          {
+            "file": "src/routes/contact/+page.server.js",
+            "line": 38
+          },
+          {
+            "file": "src/routes/contact/+page.server.js",
+            "line": 40
+          },
+          {
+            "file": "src/lib/components/admin/ImagePicker.svelte",
+            "line": 43
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 244
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 313
+          },
+          {
+            "file": "src/routes/admin/login/+page.svelte",
+            "line": 41
+          },
+          {
+            "file": "src/routes/admin/media/+page.svelte",
+            "line": 28
+          },
+          {
+            "file": "src/routes/rtw/+page.svelte",
+            "line": 193
+          },
+          {
+            "file": "src/routes/rtw/+page.svelte",
+            "line": 194
+          },
+          {
+            "file": "src/routes/rtw/+page.svelte",
+            "line": 201
+          }
+        ],
+        "literalComparisons": [
+          {
+            "file": "src/hooks.server.js",
+            "line": 38
+          },
+          {
+            "file": "src/hooks.server.js",
+            "line": 41
+          },
+          {
+            "file": "src/lib/server/brochures.js",
+            "line": 138
+          },
+          {
+            "file": "src/routes/admin/+layout.server.js",
+            "line": 10
+          },
+          {
+            "file": "src/routes/brochure/print/[id]/+page.server.js",
+            "line": 19
+          },
+          {
+            "file": "src/routes/brochure/print/[id]/+page.server.js",
+            "line": 26
+          },
+          {
+            "file": "src/routes/contact/+page.server.js",
+            "line": 36
+          },
+          {
+            "file": "src/routes/contact/+page.server.js",
+            "line": 38
+          },
+          {
+            "file": "src/routes/contact/+page.server.js",
+            "line": 39
+          },
+          {
+            "file": "src/routes/admin/+layout.svelte",
+            "line": 39
+          },
+          {
+            "file": "src/routes/admin/brochure/+page.svelte",
+            "line": 89
+          },
+          {
+            "file": "src/routes/admin/brochure/+page.svelte",
+            "line": 106
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/+page.svelte",
+            "line": 30
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 179
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 187
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 195
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 203
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 228
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 254
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 274
+          },
+          {
+            "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "line": 298
+          },
+          {
+            "file": "src/routes/admin/enquiries/+page.svelte",
+            "line": 29
+          },
+          {
+            "file": "src/routes/admin/enquiries/+page.svelte",
+            "line": 31
+          },
+          {
+            "file": "src/routes/admin/enquiries/+page.svelte",
+            "line": 33
+          },
+          {
+            "file": "src/routes/admin/enquiries/+page.svelte",
+            "line": 48
+          },
+          {
+            "file": "src/routes/admin/enquiries/+page.svelte",
+            "line": 62
+          },
+          {
+            "file": "src/routes/admin/enquiries/+page.svelte",
+            "line": 167
+          },
+          {
+            "file": "src/routes/admin/enquiries/+page.svelte",
+            "line": 173
+          },
+          {
+            "file": "src/routes/admin/login/+page.svelte",
+            "line": 41
+          },
+          {
+            "file": "src/routes/admin/rtw/+page.svelte",
+            "line": 22
+          },
+          {
+            "file": "src/routes/rtw/+page.svelte",
+            "line": 138
+          },
+          {
+            "file": "src/routes/rtw/+page.svelte",
+            "line": 139
+          },
+          {
+            "file": "src/routes/rtw/+page.svelte",
+            "line": 201
+          },
+          {
+            "file": "src/routes/rtw/+page.svelte",
+            "line": 230
+          },
+          {
+            "file": "src/routes/rtw/+page.svelte",
+            "line": 257
+          }
+        ]
+      }
+    },
+    "orphans": {
+      "name": "orphans",
+      "summary": {
+        "orphanFunctions": 0,
+        "functionsExamined": 131
+      },
+      "offenders": []
+    },
+    "designPatterns": {
+      "name": "designPatterns",
+      "summary": {
+        "roleFamilies": 3,
+        "predictedFiles": 11,
+        "predictedFilesMissing": 0,
+        "entities": 0,
+        "entitiesOutOfRange": 0,
+        "measurementIsHeuristic": true
+      },
+      "offenders": {
+        "roleFamilies": {
+          "+page.server.js": 11,
+          "+page.svelte": 18,
+          "+server.js": 7
+        },
+        "patterns": [
+          {
+            "pattern": "every +page.server.js has a +page.svelte",
+            "predicted": 11,
+            "missing": []
+          }
+        ],
+        "missingPredictedFiles": [],
+        "entityFileCounts": []
+      }
+    },
+    "inventory": {
+      "name": "inventory",
+      "summary": {
+        "pages": 18,
+        "components": 21,
+        "orphanComponents": 11,
+        "averagePageLines": 289
+      },
+      "offenders": {
+        "pages": [
+          {
+            "page": "src/routes/rtw/+page.svelte",
+            "lines": 1028,
+            "widgets": []
+          },
+          {
+            "page": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte",
+            "lines": 708,
+            "widgets": [
+              "form",
+              "list"
+            ]
+          },
+          {
+            "page": "src/routes/admin/enquiries/+page.svelte",
+            "lines": 543,
+            "widgets": [
+              "form",
+              "list"
+            ]
+          },
+          {
+            "page": "src/routes/admin/+page.svelte",
+            "lines": 470,
+            "widgets": [
+              "list"
+            ]
+          },
+          {
+            "page": "src/routes/admin/brochure/[id]/+page.svelte",
+            "lines": 379,
+            "widgets": [
+              "form",
+              "list"
+            ]
+          },
+          {
+            "page": "src/routes/admin/brochure/+page.svelte",
+            "lines": 312,
+            "widgets": [
+              "form",
+              "list"
+            ]
+          },
+          {
+            "page": "src/routes/admin/media/+page.svelte",
+            "lines": 301,
+            "widgets": [
+              "form",
+              "list"
+            ]
+          },
+          {
+            "page": "src/routes/+page.svelte",
+            "lines": 283,
+            "widgets": [
+              "list"
+            ]
+          },
+          {
+            "page": "src/routes/admin/rtw/+page.svelte",
+            "lines": 253,
+            "widgets": [
+              "table",
+              "list"
+            ]
+          },
+          {
+            "page": "src/routes/contact/+page.svelte",
+            "lines": 188,
+            "widgets": [
+              "form",
+              "list"
+            ]
+          },
+          {
+            "page": "src/routes/admin/login/+page.svelte",
+            "lines": 179,
+            "widgets": [
+              "form"
+            ]
+          },
+          {
+            "page": "src/routes/about/+page.svelte",
+            "lines": 142,
+            "widgets": [
+              "list"
+            ]
+          },
+          {
+            "page": "src/routes/fire-flood-restoration/+page.svelte",
+            "lines": 109,
+            "widgets": [
+              "list"
+            ]
+          },
+          {
+            "page": "src/routes/refurbishment/+page.svelte",
+            "lines": 98,
+            "widgets": [
+              "list"
+            ]
+          },
+          {
+            "page": "src/routes/maintenance/+page.svelte",
+            "lines": 94,
+            "widgets": [
+              "list"
+            ]
+          },
+          {
+            "page": "src/routes/brochure/+page.svelte",
+            "lines": 56,
+            "widgets": []
+          },
+          {
+            "page": "src/routes/brochure/print/[id]/+page.svelte",
+            "lines": 34,
+            "widgets": []
+          },
+          {
+            "page": "src/routes/privacy/+page.svelte",
+            "lines": 23,
+            "widgets": []
+          }
+        ],
+        "componentReuse": [
+          {
+            "component": "src/lib/components/Seo.svelte",
+            "reusedBy": 8
+          },
+          {
+            "component": "src/lib/components/Accreditations.svelte",
+            "reusedBy": 6
+          },
+          {
+            "component": "src/lib/components/brochure/BImg.svelte",
+            "reusedBy": 6
+          },
+          {
+            "component": "src/lib/components/CtaBand.svelte",
+            "reusedBy": 5
+          },
+          {
+            "component": "src/lib/components/Icon.svelte",
+            "reusedBy": 5
+          },
+          {
+            "component": "src/lib/components/Testimonials.svelte",
+            "reusedBy": 5
+          },
+          {
+            "component": "src/lib/components/brochure/BrochureDoc.svelte",
+            "reusedBy": 5
+          },
+          {
+            "component": "src/lib/components/PageHero.svelte",
+            "reusedBy": 4
+          },
+          {
+            "component": "src/lib/components/Faq.svelte",
+            "reusedBy": 1
+          },
+          {
+            "component": "src/lib/components/admin/ImagePicker.svelte",
+            "reusedBy": 1
+          },
+          {
+            "component": "src/lib/components/brochure/PageBackCover.svelte",
+            "reusedBy": 0
+          },
+          {
+            "component": "src/lib/components/brochure/PageCover.svelte",
+            "reusedBy": 0
+          },
+          {
+            "component": "src/lib/components/brochure/PageFreeform.svelte",
+            "reusedBy": 0
+          },
+          {
+            "component": "src/lib/components/brochure/PageIntro.svelte",
+            "reusedBy": 0
+          },
+          {
+            "component": "src/lib/components/brochure/PageProcess.svelte",
+            "reusedBy": 0
+          },
+          {
+            "component": "src/lib/components/brochure/PageProjectDetail.svelte",
+            "reusedBy": 0
+          },
+          {
+            "component": "src/lib/components/brochure/PageProjectGallery.svelte",
+            "reusedBy": 0
+          },
+          {
+            "component": "src/lib/components/brochure/PageProjectIntro.svelte",
+            "reusedBy": 0
+          },
+          {
+            "component": "src/lib/components/brochure/PageServices.svelte",
+            "reusedBy": 0
+          },
+          {
+            "component": "src/lib/components/brochure/PageTeam.svelte",
+            "reusedBy": 0
+          },
+          {
+            "component": "src/lib/components/brochure/PageTestimonials.svelte",
+            "reusedBy": 0
+          }
+        ],
+        "orphans": [
+          "src/lib/components/brochure/PageBackCover.svelte",
+          "src/lib/components/brochure/PageCover.svelte",
+          "src/lib/components/brochure/PageFreeform.svelte",
+          "src/lib/components/brochure/PageIntro.svelte",
+          "src/lib/components/brochure/PageProcess.svelte",
+          "src/lib/components/brochure/PageProjectDetail.svelte",
+          "src/lib/components/brochure/PageProjectGallery.svelte",
+          "src/lib/components/brochure/PageProjectIntro.svelte",
+          "src/lib/components/brochure/PageServices.svelte",
+          "src/lib/components/brochure/PageTeam.svelte",
+          "src/lib/components/brochure/PageTestimonials.svelte"
+        ]
+      }
+    },
+    "siteDefinition": {
+      "name": "siteDefinition",
+      "summary": {
+        "skipped": "no siteDefinition catalogue in rules.json"
+      },
+      "offenders": {
+        "handRolled": [],
+        "boxedWidgets": []
+      }
+    },
+    "fileAreas": {
+      "name": "fileAreas",
+      "summary": {
+        "totalFiles": 178,
+        "frontend": 127,
+        "backend": 20,
+        "infrastructure": 10,
+        "api": 7,
+        "shared": 5,
+        "tooling": 3,
+        "database": 3,
+        "other": 2,
+        "docs": 1
+      },
+      "offenders": [
+        {
+          "area": "frontend",
+          "files": 127,
+          "sourceFiles": 42,
+          "sourceLines": 7229
+        },
+        {
+          "area": "backend",
+          "files": 20,
+          "sourceFiles": 20,
+          "sourceLines": 1816
+        },
+        {
+          "area": "infrastructure",
+          "files": 10,
+          "sourceFiles": 0,
+          "sourceLines": 0
+        },
+        {
+          "area": "api",
+          "files": 7,
+          "sourceFiles": 7,
+          "sourceLines": 229
+        },
+        {
+          "area": "shared",
+          "files": 5,
+          "sourceFiles": 5,
+          "sourceLines": 1012
+        },
+        {
+          "area": "tooling",
+          "files": 3,
+          "sourceFiles": 0,
+          "sourceLines": 0
+        },
+        {
+          "area": "database",
+          "files": 3,
+          "sourceFiles": 0,
+          "sourceLines": 0
+        },
+        {
+          "area": "other",
+          "files": 2,
+          "sourceFiles": 1,
+          "sourceLines": 4
+        },
+        {
+          "area": "docs",
+          "files": 1,
+          "sourceFiles": 0,
+          "sourceLines": 0
+        }
+      ]
+    },
+    "inputValidation": {
+      "name": "inputValidation",
+      "summary": {
+        "schemaTables": 2,
+        "limitedColumns": 0,
+        "writeDoors": 0,
+        "unvalidatedDoors": 0,
+        "looserLimits": 0
+      },
+      "offenders": {
+        "unvalidated": [],
+        "looserLimits": []
+      }
+    },
+    "duplication": {
+      "name": "duplication",
+      "summary": {
+        "clones": 9,
+        "duplicatedLines": 145,
+        "totalLines": 15451,
+        "duplicatedPercentage": 0.94
+      },
+      "offenders": [
+        {
+          "file": "src/routes/admin/brochure/[id]/+page.svelte:css",
+          "duplicatedLineInstances": 74
+        },
+        {
+          "file": "src/routes/admin/enquiries/+page.svelte:css",
+          "duplicatedLineInstances": 69
+        },
+        {
+          "file": "src/routes/admin/media/+page.svelte:css",
+          "duplicatedLineInstances": 66
+        },
+        {
+          "file": "src/routes/admin/brochure/+page.svelte:css",
+          "duplicatedLineInstances": 62
+        },
+        {
+          "file": "src/routes/admin/rtw/+page.svelte:css",
+          "duplicatedLineInstances": 21
+        },
+        {
+          "file": "src/lib/components/admin/ImagePicker.svelte:javascript",
+          "duplicatedLineInstances": 13
+        },
+        {
+          "file": "src/routes/admin/media/+page.svelte:javascript",
+          "duplicatedLineInstances": 13
+        },
+        {
+          "file": "src/routes/admin/brochure/[id]/page/[pageId]/+page.svelte:html",
+          "duplicatedLineInstances": 12
+        }
+      ]
+    }
+  }
+}
