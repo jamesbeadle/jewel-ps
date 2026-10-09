@@ -14,3 +14,7 @@ vite.config.ts.timestamp-*
 _to_delete/
 RUN-ME-download-images.bat
 download_wix_images.ps1
+
+# project-process kit tooling
+__pycache__/
+*.pyc
